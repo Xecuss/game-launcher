@@ -1,0 +1,19 @@
+{
+  "name": "sdvx-launcher",
+  "version": "0.0.1",
+  "description": "",
+  "main": "./dist/main.js",
+  "scripts": {
+    "build": "rm -rf ./dist && tsc",
+    "start": "npm run build && electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Xs!",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/electron": "^1.6.10",
+    "@types/node": "^12.9.0",
+    "electron": "^9.2.1",
+    "typescript": "^3.9.7"
+  }
+}

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>Hello！</title>
+    <link href="../style/common.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div id="app">
+        <h1>Hello Electron!</h1>
+        <button onclick="closeWindow()">X</button>
+    </div>
+</body>
+<script>
+const { ipcRenderer } = require('electron');
+
+function closeWindow(){
+    console.log('will close');
+    ipcRenderer.send('close');
+}
+</script>
