@@ -6,13 +6,19 @@
 </head>
 <body>
     <div id="app">
-        <h1>Hello Electron!</h1>
+        <h1 id="test">Hello Electron!</h1>
         <button onclick="closeWindow()">X</button>
     </div>
 </body>
 <script>
 const { ipcRenderer } = require('electron');
+const os = require('os');
 
+function init(){
+    let networks = os.networkInterfaces();
+    document.querySelector('#test').innerHTML = JSON.stringify(networks);
+}
+init();
 function closeWindow(){
     console.log('will close');
     ipcRenderer.send('close');
