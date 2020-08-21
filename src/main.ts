@@ -8,7 +8,6 @@ async function main(){
         width: 500,
         height: 300,
         frame: false,
-        transparent: true,
         webPreferences: {
             nodeIntegration: true
         }
