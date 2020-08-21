@@ -68,5 +68,6 @@ module.exports = {
             filename: path.resolve(__dirname, '../dist/views/index.html'),
             template: './src/view/index.ejs'
         })
-    ]
+    ],
+    target: "electron-renderer"
 };
