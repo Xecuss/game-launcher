@@ -14,7 +14,7 @@ async function main(){
         }
     });
 
-    mainWindow.loadFile(path.resolve('./page/index.html'));
+    mainWindow.loadFile(path.resolve('./dist/views/index.html'));
 
     ipcMain.on('close', () => {
         console.log('close!');
