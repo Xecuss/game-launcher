@@ -4,7 +4,6 @@
         <label class="form-group">
             <p>命令预览：</p>
             <p class="command-prev">{{ runCommand }}</p>
-            <button @click="start" class="start-btn">Start!</button>
         </label>
     </div>
 
@@ -52,6 +51,7 @@ import { ILocalNetwork } from '../interface/localNet.interface';
 import { getLocalNetwork } from '../lib/getLocalNetwork';
 import { exec } from 'child_process';
 import { ILauncherConfig } from '../interface/config.interface';
+import { useRunCommand } from '../lib/runCommand';
 
 export default {
     setup(props: any, ctx: any){
@@ -59,47 +59,21 @@ export default {
 
         if(!conf) return {};
 
-        let localNetworks: Array<ILocalNetwork> = reactive(getLocalNetwork());
-        let nowLocalNetwork = ref(localNetworks[0]);
-
-        for(let item of localNetworks){
-            if(item.name === conf.value.nowLocalNetwork){
-                nowLocalNetwork = ref(item);
-            }
-        }
-
-        function start(){
-            exec(runCommand.value);
-        }
+        let {
+            runCommand,
+            localNetworks,
+            nowLocalNetwork
+        } = useRunCommand(conf);
 
         watchEffect(() => {
             if(conf) conf.value.nowLocalNetwork = nowLocalNetwork.value.name;
-        });
-
-        let runCommand = computed(() => {
-            if(!conf) return '';
-
-            let res = 'spice64';
-            if(conf.value.use720p) res += ` -sdvx720`;
-            if(conf.value.window) res += ` -w`;
-            if(conf.value.usePrinter){
-                res += ' -printer';
-                if(conf.value.printerPath) res += ` -printerath ${conf.value.printerPath}`;
-            }
-            if(nowLocalNetwork && nowLocalNetwork.value.v4){
-                let v4 = nowLocalNetwork.value.v4;
-                res += ` -network ${v4.address}`;
-                res += ` -subnet ${v4.netmask}`;
-            }
-            return res;
         });
 
         return { 
             conf,
             localNetworks,
             nowLocalNetwork,
-            runCommand,
-            start
+            runCommand
         };
     }
 }

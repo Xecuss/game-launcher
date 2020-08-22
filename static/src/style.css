@@ -12,7 +12,8 @@ body *{
 :root{
     --theme-color-main: #03A9F4;
     --theme-font-white-main: rgba(255, 255, 255, 0.95);
-    --theme-shadow-depth4: 0 0 4px 0 rgba(0, 0, 0, 0.1);
+    --theme-shadow-depth4: 0 0 4px 1px rgba(0, 0, 0, 0.1);
+    --theme-shadow-depth8: 0 0 8px 1px rgba(0, 0, 0, 0.1);
 }
 .block{
     background-color: white;

@@ -1,14 +1,18 @@
 <template>
     <div id="main-container">
         <top-banner @close="closeApp"/>
-        <setting />
+        <div class="content">
+            <my-nav />
+            <router-view />
+        </div>
     </div>
 </template>
 <script lang="ts">
 import { provide, ref, watch } from 'vue';
+import { useRouter } from 'vue-router';
 
 import topBanner from './components/topBanner.vue';
-import Setting from './pages/setting.vue';
+import Nav from './components/nav.vue';
 
 import { ILocalNetwork } from './interface/localNet.interface';
 import { ILauncherConfig } from './interface/config.interface';
@@ -37,13 +41,17 @@ export default {
             deep: true
         });
 
+        let router = useRouter();
+
+        router.push('/');
+
         return { 
             closeApp
         };
     },
     components: {
         topBanner,
-        Setting
+        MyNav: Nav
     }
 }
 </script>
@@ -58,10 +66,14 @@ export default {
     background-size: 100% auto;
     background-position: top center;
 }
+#main-container .content{
+    display: flex;
+    height: calc(100% - 40px);
+}
 #main-container .page{
     padding: 10px;
     box-sizing: border-box;
-    height: calc(100% - 40px);
+    flex-grow: 1;
 }
 .form-group{
     display: block;

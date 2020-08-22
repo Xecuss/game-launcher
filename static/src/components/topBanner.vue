@@ -43,5 +43,7 @@ export default {
     display: inline-block;
     cursor: pointer;
     -webkit-app-region: no-drag;
+    font-size: 30px;
+    font-weight: 100;
 }
 </style>
