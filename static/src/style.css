@@ -8,9 +8,13 @@ body *{
     height: 100%;
     left: 0;
     top: 0;
-    -webkit-app-region: drag;
 }
 :root{
-    --theme-color-main: cyan;
+    --theme-color-main: #03A9F4;
     --theme-font-white-main: rgba(255, 255, 255, 0.95);
+    --theme-shadow-depth4: 0 0 4px 0 rgba(0, 0, 0, 0.1);
+}
+.block{
+    background-color: white;
+    box-shadow: var(--theme-shadow-depth4);
 }

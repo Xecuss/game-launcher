@@ -11,6 +11,7 @@
   "devDependencies": {
     "@vue/compiler-sfc": "^3.0.0-rc.6",
     "css-loader": "^4.2.1",
+    "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.3.0",
     "mini-css-extract-plugin": "^0.10.0",
     "ts-loader": "^8.0.2",

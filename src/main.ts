@@ -1,5 +1,4 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
-import path from 'path';
 
 async function main(){
     await app.whenReady();
@@ -9,19 +8,20 @@ async function main(){
         height: 480,
         frame: false,
         webPreferences: {
-            nodeIntegration: true
+            nodeIntegration: true,
+            webSecurity: false
         },
         resizable: false
     });
 
-    mainWindow.loadFile(path.resolve('./dist/views/index.html'));
+    mainWindow.loadFile('./dist/views/index.html');
 
     ipcMain.on('close', () => {
         console.log('close!');
         mainWindow.close();
     });
 
-    mainWindow.webContents.openDevTools();
+    //mainWindow.webContents.openDevTools();
 }
 
 main();

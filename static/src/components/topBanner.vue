@@ -2,20 +2,26 @@
     <div class="top-bar">
         <p class="title">Sx Launcher</p>
         <div class="opt-group">
-            <span class="btn" @click="close">X</span>
+            <span class="btn" @click="callClose">×</span>
         </div>
     </div>
 </template>
 <script lang="ts">
+import { SetupContext } from 'vue';
+
 export default {
-    setup(props: any, ctx: any){
-        return {
-            close(){
-                ctx.emit('close');
-            }
+    setup(props: any, { emit }: SetupContext){
+
+        function callClose(){
+            emit('close');
         }
+
+        return {
+            callClose
+        };
     }
 }
+
 </script>
 <style scoped>
 .top-bar{
@@ -28,6 +34,7 @@ export default {
     box-sizing: border-box;
     padding: 0 20px;
     color: var(--theme-font-white-main);
+    -webkit-app-region: drag;
 }
 .top-bar .title{
     font-size: 16px;
