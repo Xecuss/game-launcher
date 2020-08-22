@@ -3,11 +3,28 @@
   "version": "0.0.1",
   "description": "",
   "main": "./dist/main.js",
+  "build": {
+    "productName": "Sx Launcher",
+    "appId": "ml.xecus.sxl",
+    "copyright": "Xecus",
+    "directories": {
+      "output": "release"
+    },
+    "files": ["dist/**/*"],
+    "win": {
+      "target": [
+        {
+          "target": "dir"
+        }
+      ]
+    }
+  },
   "scripts": {
-    "build": "rm -rf ./dist && tsc",
+    "build": "tsc",
     "build-static": "cd static && npm test",
-    "start": "npm run build && npm run build-static && electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npm run build && npm run build-static && electron-builder",
+    "test": "npm run build && npm run build-static && electron .",
+    "dist": "electron-builder"
   },
   "author": "Xs!",
   "license": "ISC",
@@ -15,6 +32,7 @@
     "@types/electron": "^1.6.10",
     "@types/node": "^12.9.0",
     "electron": "^9.2.1",
+    "electron-builder": "^22.8.0",
     "typescript": "^3.9.7"
   }
 }
