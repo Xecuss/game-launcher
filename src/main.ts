@@ -8,8 +8,7 @@ async function main(){
         height: 480,
         frame: false,
         webPreferences: {
-            nodeIntegration: true,
-            webSecurity: false
+            nodeIntegration: true
         },
         resizable: false
     });
@@ -17,11 +16,10 @@ async function main(){
     mainWindow.loadFile('./dist/views/index.html');
 
     ipcMain.on('close', () => {
-        console.log('close!');
         mainWindow.close();
     });
 
-    //mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
 }
 
 main();

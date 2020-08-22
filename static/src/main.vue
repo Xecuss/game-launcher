@@ -5,26 +5,40 @@
     </div>
 </template>
 <script lang="ts">
-import { ref, reactive, computed } from 'vue';
+import { provide, ref, watch } from 'vue';
+
 import topBanner from './components/topBanner.vue';
+import Setting from './pages/setting.vue';
+
 import { ILocalNetwork } from './interface/localNet.interface';
+import { ILauncherConfig } from './interface/config.interface';
+import { defaultConf } from './data/defaultConfig';
+
 import { getLocalNetwork } from './lib/getLocalNetwork';
+import { readConfigOrDefault, writeConf } from './lib/readConfig';
 
 import { ipcRenderer } from 'electron';
-
-import Setting from './pages/setting.vue';
 
 export default {
     setup(props: any, ctx: any){
         function closeApp(){
             ipcRenderer.send('close');
         }
-        function start(){
-        }
+
+        let conf = ref(readConfigOrDefault('./sxLauncher.json', defaultConf));
+
+        //注入全局配置
+        provide('globalConfig', conf);
+
+        //修改配置自动保存
+        watch(conf, (obj) => {
+            if(obj) writeConf('./sxLauncher.json', conf.value);
+        }, {
+            deep: true
+        });
 
         return { 
-            closeApp,
-            start
+            closeApp
         };
     },
     components: {
@@ -39,7 +53,7 @@ export default {
     width: 100%;
     height: 100%;
     box-shadow: inset 0 0 1px 0 var(--theme-color-main);
-    overflow: auto;
+    overflow: hidden;
     background-image: url('./assets/nianoa.jpg');
     background-size: 100% auto;
     background-position: top center;
@@ -47,7 +61,7 @@ export default {
 #main-container .page{
     padding: 10px;
     box-sizing: border-box;
-    min-height: calc(100% - 40px);
+    height: calc(100% - 40px);
 }
 .form-group{
     display: block;

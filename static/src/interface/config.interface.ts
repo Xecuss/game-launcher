@@ -1,3 +1,5 @@
+import { ILocalNetwork } from "./localNet.interface";
+
 export interface ILauncherConfig{
     use720p: boolean;
     window: boolean;
@@ -7,6 +9,7 @@ export interface ILauncherConfig{
     printerClear: boolean;
     useAbleNetWorkConf: Array<INetworkConfig>;
     nowUseNetwork: string;
+    nowLocalNetwork: string;
     screenShotPath: string;
     ea: boolean;
     //spice api选项，打开后可以通过工具远程控制spice

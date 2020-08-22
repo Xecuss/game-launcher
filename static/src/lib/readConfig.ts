@@ -1,12 +1,16 @@
-import fs from 'fs/promises';
+import fs from 'fs';
 
-async function readConfigOrDefault<T>(path: string, defaultConf: T): Promise<T>{
+export function readConfigOrDefault<T>(path: string, defaultConf: T): T{
     try{
-        let res = await fs.readFile(path);
+        let res = fs.readFileSync(path);
         return JSON.parse(res.toString());
     }
     catch(e){
-        await fs.writeFile(path, JSON.stringify(defaultConf));
+        fs.writeFileSync(path, JSON.stringify(defaultConf));
         return defaultConf;
     }
+}
+
+export function writeConf<T>(path: string, conf: T){
+    fs.writeFileSync(path, JSON.stringify(conf));
 }
