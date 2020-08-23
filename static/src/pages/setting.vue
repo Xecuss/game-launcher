@@ -30,6 +30,19 @@
                 </option>
             </select>
         </label>
+        <label class="form-group">
+            外部网络 
+            <select v-model="conf.nowUseNetwork">
+                <option :value="-1">使用ea3(默认)</option>
+                <option 
+                v-for="item in conf.useAbleNetWorkConf" 
+                :key="item.id"
+                :value="item.id">
+                    {{ item.name }}
+                </option>
+            </select>
+            <router-link to="/networks" class="inline-link">管理网络</router-link>
+        </label>
     </div>
 
     <p class="block-title">杂项</p>
@@ -82,25 +95,5 @@ export default {
 .page{
     background-color: rgba(255, 255, 255, 0.4);
     overflow: auto;
-}
-.block{
-    margin: 10px;
-}
-.block-title{
-    font-size: 16px;
-    color: rgba(0, 0, 0, 0.7);
-    margin: 10px;
-}
-.form-group{
-    display: block;
-    padding: 15px 10px;
-    border-bottom: 1px solid  rgba(0, 0, 0, 0.1);
-    box-sizing: border-box;
-}
-.command-prev{
-    color: var(--theme-color-main);
-}
-.start-btn{
-    font-size: 30px;
 }
 </style>

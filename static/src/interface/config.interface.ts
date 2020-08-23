@@ -8,7 +8,7 @@ export interface ILauncherConfig{
     printerFormat: 'png' | 'bmp' | 'tga' | 'jpg';
     printerClear: boolean;
     useAbleNetWorkConf: Array<INetworkConfig>;
-    nowUseNetwork: string;
+    nowUseNetwork: number;
     nowLocalNetwork: string;
     screenShotPath: string;
     ea: boolean;
@@ -18,9 +18,10 @@ export interface ILauncherConfig{
 }
 
 export interface INetworkConfig{
-    http11: 0 | 1;
-    urlSlash: 0 | 1;
+    http11: boolean;
+    urlSlash: boolean;
     url: string;
     pcbId: string;
-    id: string;
+    id: number;
+    name: string;
 }

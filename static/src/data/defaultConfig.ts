@@ -8,7 +8,7 @@ export let defaultConf: ILauncherConfig = {
     printerFormat: 'jpg',
     printerClear: false,
     useAbleNetWorkConf: [],
-    nowUseNetwork: '',
+    nowUseNetwork: -1,
     nowLocalNetwork: '',
     screenShotPath: '',
     ea: false,

@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import Setting from './pages/setting.vue';
 import Home from './pages/home.vue';
+import Network from './pages/network.vue';
 
 const routerHistory = createWebHistory();
 
@@ -19,6 +20,10 @@ export const router = createRouter({
         {
             path: '/settings',
             component: Setting
+        },
+        {
+            path: '/networks',
+            component: Network
         }
     ]
 });

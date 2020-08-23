@@ -19,3 +19,26 @@ body *{
     background-color: white;
     box-shadow: var(--theme-shadow-depth4);
 }
+.block-title{
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.7);
+    margin: 10px;
+}
+.block{
+    margin: 10px;
+}
+.form-group{
+    display: block;
+    padding: 15px 10px;
+    border-bottom: 1px solid  rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+.form-group .inline-link{
+    margin: 0 10px;
+}
+.command-prev{
+    color: var(--theme-color-main);
+}
+.start-btn{
+    font-size: 30px;
+}
