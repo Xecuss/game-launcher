@@ -1,6 +1,6 @@
 {
   "name": "sdvx-launcher",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "",
   "main": "./dist/main.js",
   "build": {
@@ -10,7 +10,9 @@
     "directories": {
       "output": "release"
     },
-    "files": ["dist/**/*"],
+    "files": [
+      "dist/**/*"
+    ],
     "win": {
       "target": [
         {
