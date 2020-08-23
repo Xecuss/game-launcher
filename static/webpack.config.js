@@ -12,7 +12,6 @@ module.exports = {
         filename: '[name]_[chunkhash].js'
     },
 
-    devtool: 'inline-source-map',
     mode: 'development',
 
     resolve: {

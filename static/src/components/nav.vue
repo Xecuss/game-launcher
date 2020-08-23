@@ -13,6 +13,7 @@ export default{
 </script>
 <style scoped>
 .nav{
+    min-width: 58px;
     height: 100%;
     background-color: rgba(255, 255, 255, 0.4);
     border-right: 1px solid rgba(0, 0, 0, 0.2);
