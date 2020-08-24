@@ -1,5 +1,5 @@
 {
-  "name": "sdvx-launcher",
+  "name": "sx-launcher",
   "version": "0.1.1",
   "description": "",
   "main": "./dist/main.js",
@@ -22,7 +22,7 @@
     }
   },
   "scripts": {
-    "build": "tsc",
+    "build": "rimraf ./dist && tsc",
     "build-static": "cd static && npm test",
     "start": "npm run build && npm run build-static && electron-builder",
     "test": "npm run build && npm run build-static && electron .",
@@ -35,6 +35,7 @@
     "@types/node": "^12.9.0",
     "electron": "^9.2.1",
     "electron-builder": "^22.8.0",
+    "rimraf": "^3.0.2",
     "typescript": "^3.9.7"
   }
 }
