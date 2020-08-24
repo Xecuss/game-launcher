@@ -22,11 +22,12 @@
     }
   },
   "scripts": {
-    "build": "rimraf ./dist && tsc",
+    "build-all": "npm run build-main && npm run build-static",
     "build-static": "cd static && npm test",
-    "start": "npm run build && npm run build-static && electron-builder",
-    "test": "npm run build && npm run build-static && electron .",
-    "dist": "electron-builder"
+    "build-main": "tsc",
+    "clear": "rimraf ./dist",
+    "start": "npm run clear && npm run build-all && electron-builder",
+    "test": "npm run clear && npm run build-all && electron ."
   },
   "author": "Xs!",
   "license": "ISC",
