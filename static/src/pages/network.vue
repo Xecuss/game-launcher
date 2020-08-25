@@ -1,6 +1,6 @@
 <template>
     <div class="page">
-        <a @click="back" class="back-btn mui-btn mui-btn--flat">返回</a>
+        <a @click="back" class="back-btn"><i class="fa fa-arrow-left"/> 返回</a>
         <div v-for="item in networks" :key="item.id">
             <p class="block-title">{{ item.name || '无标题' }}</p>
             <div class="mui-panel">

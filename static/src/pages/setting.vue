@@ -1,5 +1,5 @@
 <template>
-<div class="page">
+<div class="page beautify-scroll">
     <div class="mui-panel">
         <p>命令预览：</p>
         <p class="command-prev">{{ runCommand }}</p>
@@ -42,7 +42,7 @@
                 v-for="item in conf.useAbleNetWorkConf" 
                 :key="item.id"
                 :value="item.id">
-                    {{ item.name }}
+                    {{ item.name || '无标题' }}
                 </option>
             </select>
             <label>外部网络</label>

@@ -42,3 +42,6 @@ body *{
 .start-btn{
     font-size: 30px;
 }
+.beautify-scroll::-webkit-scrollbar-button{
+    display: none;
+}
