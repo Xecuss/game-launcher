@@ -14,8 +14,6 @@ export function useRunCommand(conf: Ref<ILauncherConfig>) {
     }
 
     let runCommand = computed(() => {
-        if(!conf) return '';
-
         let res = 'spice64';
         if(conf.value.use720p) res += ` -sdvx720`;
         if(conf.value.window) res += ` -w`;
@@ -38,7 +36,18 @@ export function useRunCommand(conf: Ref<ILauncherConfig>) {
         return res;
     });
 
+    let servCommand = computed( () => {
+        let network = conf.value.useAbleNetWorkConf.find( x => x.id === conf.value.nowUseNetwork);
+
+        if(network?.localServCommand){
+            return network.localServCommand;
+        }
+
+        return '';
+    });
+
     return {
+        servCommand,
         runCommand,
         localNetworks,
         nowLocalNetwork

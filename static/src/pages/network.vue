@@ -26,6 +26,10 @@
                     <input type="checkbox" v-model="item.urlSlash"> Url Slash
                     </label>
                 </div>
+                <div class="mui-textfield mui-textfield--float-label" v-if="isLocal(item)">
+                    <input type="text" v-model="item.localServCommand">
+                    <label>离线服务器启动脚本</label>
+                </div>
                 <div>
                 <a class="mui-btn mui-btn--danger mui-btn--raised" @click="del(item)">删除</a>
                 </div>
@@ -35,9 +39,11 @@
     </div>
 </template>
 <script lang="ts">
-import { inject, Ref } from 'vue'
+import { inject, Ref, computed } from 'vue'
 import { useRouter } from 'vue-router';
 import { ILauncherConfig, INetworkConfig } from '../interface/config.interface';
+
+const localReg = /https?\:\/\/(localhost|127\.0\.0\.1)/;
 
 export default {
     setup(){
@@ -60,6 +66,14 @@ export default {
             networks.push(temp);
         }
 
+        function isLocal(item: INetworkConfig): boolean{
+            let res = localReg.test(item.url);
+            if(!res && item.localServCommand !== undefined){
+                item.localServCommand = '';
+            }
+            return res;
+        }
+
         function back(){
             router.back();
         }
@@ -77,7 +91,8 @@ export default {
             networks,
             add,
             back,
-            del
+            del,
+            isLocal
         }
     }
 }

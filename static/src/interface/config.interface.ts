@@ -24,4 +24,5 @@ export interface INetworkConfig{
     pcbId: string;
     id: number;
     name: string;
+    localServCommand?: string;
 }

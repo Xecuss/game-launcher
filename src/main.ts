@@ -7,6 +7,7 @@ async function main(){
         width: 800,
         height: 480,
         frame: false,
+        icon: './static/src/assets/icon.ico',
         webPreferences: {
             nodeIntegration: true
         },
@@ -19,7 +20,7 @@ async function main(){
         mainWindow.close();
     });
 
-    mainWindow.webContents.openDevTools();
+    //mainWindow.webContents.openDevTools();
 }
 
 main();

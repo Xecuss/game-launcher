@@ -16,10 +16,14 @@ export default {
         if(!conf) return {};
 
         let {
+            servCommand,
             runCommand,
         } = useRunCommand(conf);
 
         function start(){
+            if(servCommand.value){
+                exec(servCommand.value);
+            }
             exec(runCommand.value);
         }
         return {
