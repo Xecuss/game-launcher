@@ -1,26 +1,28 @@
 <template>
 <div class="page">
-    <div class="block">
-        <label class="form-group">
-            <p>命令预览：</p>
-            <p class="command-prev">{{ runCommand }}</p>
-        </label>
+    <div class="mui-panel">
+        <p>命令预览：</p>
+        <p class="command-prev">{{ runCommand }}</p>
     </div>
 
     <p class="block-title">显示</p>
-    <div class="block">
-        <label class="form-group">
-            <input type="checkbox" v-model="conf.use720p"> 强制720p分辨率
-        </label>
-        <label class="form-group">
-            <input type="checkbox" v-model="conf.window"> 窗口模式
-        </label>
+    <div class="mui-panel">
+        <div class="mui-checkbox">
+            <label>
+                <input type="checkbox" v-model="conf.use720p"> 强制720p分辨率
+            </label>
+        </div>
+        <div class="mui-checkbox">
+            <label>
+                <input type="checkbox" v-model="conf.window"> 窗口模式
+            </label>
+        </div>
     </div>
 
     <p class="block-title">网络</p>
-    <div class="block">
-        <label class="form-group">
-            好友网络 
+    <div class="mui-panel">
+        <div>
+        <div class="mui-select my-select">
             <select v-model="nowLocalNetwork">
                 <option 
                 v-for="item in localNetworks" 
@@ -29,9 +31,11 @@
                     {{ item.name }}
                 </option>
             </select>
-        </label>
-        <label class="form-group">
-            外部网络 
+            <label>好友网络</label>
+        </div>
+        </div>
+        <div>
+        <div class="mui-select my-select">
             <select v-model="conf.nowUseNetwork">
                 <option :value="-1">使用ea3(默认)</option>
                 <option 
@@ -41,19 +45,24 @@
                     {{ item.name }}
                 </option>
             </select>
-            <router-link to="/networks" class="inline-link">管理网络</router-link>
-        </label>
+            <label>外部网络</label>
+        </div>
+        <router-link to="/networks" class="mui-btn mui-btn--flat mui-btn--primary">管理网络</router-link>
+        </div>
     </div>
 
     <p class="block-title">杂项</p>
-    <div class="block">
-        <label class="form-group">
-            <input type="checkbox" v-model="conf.usePrinter"> 模拟印卡机
-        </label>
+    <div class="mui-panel">
+        <div class="mui-checkbox">
+            <label>
+                <input type="checkbox" v-model="conf.usePrinter"> 模拟印卡机
+            </label>
+        </div>
         <template v-if="conf.usePrinter">
-        <label class="form-group">
-            <input type="text" v-model="conf.printerPath" placeholder="模拟印卡机保存位置">
-        </label>
+        <div class="mui-textfield mui-textfield--float-label">
+            <input type="text" v-model="conf.printerPath">
+            <label>模拟印卡机保存位置</label>
+        </div>
         </template>
     </div>
 </div>
@@ -95,5 +104,8 @@ export default {
 .page{
     background-color: rgba(255, 255, 255, 0.4);
     overflow: auto;
+}
+.mui-select.my-select{
+    display: inline-block;
 }
 </style>
