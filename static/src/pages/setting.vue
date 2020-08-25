@@ -47,7 +47,7 @@
             </select>
             <label>外部网络</label>
         </div>
-        <router-link to="/networks" class="mui-btn mui-btn--flat mui-btn--primary">管理网络</router-link>
+        <router-link to="/networks" class="mui-btn mui-btn--raised mui-btn--primary" style="margin-left: 20px;">管理网络</router-link>
         </div>
     </div>
 

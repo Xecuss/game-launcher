@@ -1,30 +1,37 @@
 <template>
     <div class="page">
-        <a @click="back" class="back-btn">返回</a>
+        <a @click="back" class="back-btn mui-btn mui-btn--flat">返回</a>
         <div v-for="item in networks" :key="item.id">
             <p class="block-title">{{ item.name || '无标题' }}</p>
-            <div class="block">
-                <label class="form-group">
-                    配置名称 <input type="text" v-model="item.name" placeholder="配置名称">
-                </label>
-                <label class="form-group">
-                    URL <input type="text" v-model="item.url" placeholder="ID">
-                </label>
-                <label class="form-group">
-                    PCBID <input type="text" v-model="item.pcbId" placeholder="ID">
-                </label>
-                <label class="form-group">
-                    <input type="checkbox" v-model="item.http11"> HTTP11
-                </label>
-                <label class="form-group">
+            <div class="mui-panel">
+                <div class="mui-textfield mui-textfield--float-label">
+                    <input type="text" v-model="item.name">
+                    <label>配置名称</label>
+                </div>
+                <div class="mui-textfield mui-textfield--float-label">
+                    <input type="text" v-model="item.url">
+                    <label>URL</label>
+                </div>
+                <div class="mui-textfield mui-textfield--float-label">
+                    <input type="text" v-model="item.pcbId">
+                    <label>PCBID</label>
+                </div>
+                <div class="mui-checkbox">
+                    <label>
+                        <input type="checkbox" v-model="item.http11"> HTTP11
+                    </label>
+                </div>
+                <div class="mui-checkbox">
+                    <label>
                     <input type="checkbox" v-model="item.urlSlash"> Url Slash
-                </label>
-                <label class="form-group">
-                    <button @click="del(item)">删除</button>
-                </label>
+                    </label>
+                </div>
+                <div>
+                <a class="mui-btn mui-btn--danger mui-btn--raised" @click="del(item)">删除</a>
+                </div>
             </div>
         </div>
-        <a @click="add" class="add-btn">+</a>
+        <a @click="add" class="add-btn mui-btn mui-btn--fab">+</a>
     </div>
 </template>
 <script lang="ts">
@@ -91,8 +98,6 @@ export default {
     display: block;
     width: 50px;
     height: 50px;
-    border-radius: 25px;
-    box-shadow: var(--theme-shadow-depth8);
     line-height: 50px;
     font-size: 30px;
     font-weight: 100;
