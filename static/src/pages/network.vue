@@ -35,7 +35,7 @@
                 </div>
             </div>
         </div>
-        <a @click="add" class="add-btn mui-btn mui-btn--fab">+</a>
+        <a @click="add" class="add-btn mui-btn mui-btn--fab"><i class="fa fa-plus"/></a>
     </div>
 </template>
 <script lang="ts">
@@ -116,11 +116,15 @@ export default {
     line-height: 50px;
     font-size: 30px;
     font-weight: 100;
-    right: 10px;
-    bottom: 10px;
+    right: 20px;
+    bottom: 20px;
     background-color: var(--theme-color-main);
     text-align: center;
     color: var(--theme-font-white-main);
     cursor: pointer;
+    -webkit-text-stroke: 5px var(--theme-color-main);
+    padding-top: 2px;
+    padding-left: 2px;
+    box-sizing: border-box;
 }
 </style>

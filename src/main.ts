@@ -19,7 +19,7 @@ async function main(){
         mainWindow.close();
     });
 
-    //mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
 }
 
 main();

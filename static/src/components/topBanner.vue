@@ -2,7 +2,7 @@
     <div class="top-bar">
         <p class="title">Sx Launcher</p>
         <div class="opt-group">
-            <span class="btn" @click="callClose">×</span>
+            <span class="btn" @click="callClose"><i class="fa fa-times"/></span>
         </div>
     </div>
 </template>
@@ -45,5 +45,6 @@ export default {
     -webkit-app-region: no-drag;
     font-size: 30px;
     font-weight: 100;
+    -webkit-text-stroke: 5px var(--theme-color-main);
 }
 </style>
