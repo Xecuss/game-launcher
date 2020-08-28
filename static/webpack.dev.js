@@ -74,7 +74,7 @@ module.exports = {
             chunkFilename: '[id]_[chunkhash].css'
         }),
         new HtmlPlugin({
-            filename: path.resolve(__dirname, '../dist/views/index.html'),
+            filename: 'index.html',
             template: './src/view/index.ejs'
         })
     ],

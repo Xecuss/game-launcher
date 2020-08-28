@@ -17,11 +17,9 @@ async function main(){
 
     console.log(process.env.NODE_ENV);
     if(process.env.NODE_ENV === 'development'){
-        setTimeout(() => {
-            console.log('wait for webpack...');
-            mainWindow.loadURL('http://localhost:8081/views/index.html');
-            mainWindow.webContents.openDevTools();
-        }, 20000);
+        console.log('在测试环境启动Electron!');
+        mainWindow.loadURL('http://localhost:9000/');
+        mainWindow.webContents.openDevTools();
     }
     else{
         mainWindow.loadFile('./dist/views/index.html');
