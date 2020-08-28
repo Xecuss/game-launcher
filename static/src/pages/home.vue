@@ -7,7 +7,7 @@
 import { inject, Ref } from 'vue';
 import { useRunCommand } from '../lib/runCommand';
 import { ILauncherConfig } from '../interface/config.interface';
-import { exec } from 'child_process';
+import { exec, ChildProcess } from 'child_process';
 
 export default {
     setup(){
@@ -20,11 +20,16 @@ export default {
             runCommand,
         } = useRunCommand(conf);
 
+        let localServProcess: ChildProcess | null = null;
+
         function start(){
             if(servCommand.value){
-                exec(servCommand.value);
+                localServProcess = exec(servCommand.value);
             }
-            exec(runCommand.value);
+            exec(runCommand.value, () => {
+                //当游戏终止的时候终止离线服务器进程
+                if(localServProcess !== null) localServProcess.kill();
+            });
         }
         return {
             start
