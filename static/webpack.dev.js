@@ -12,7 +12,17 @@ module.exports = {
         filename: '[name]_[chunkhash].js'
     },
 
-    mode: 'production',
+    mode: 'development',
+
+    devtool: "source-map",
+
+    devServer: {
+        contentBase: path.resolve(__dirname, '../dist'),
+        publicPath: '/',
+        index: 'index.html',
+        historyApiFallback: true,
+        port: 8082
+    },
 
     resolve: {
         extensions: [".js", ".ts", ".tsx"]

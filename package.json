@@ -28,13 +28,15 @@
     "build-main": "tsc",
     "clear": "rimraf ./dist",
     "start": "npm run clear && npm run build-all && electron-builder",
-    "test": "npm run clear && npm run build-all && electron ."
+    "dev": "npm run clear && npm run build-main && npm run build-static & electron .",
+    "test": "cross-env NODE_ENV=development npm run dev"
   },
   "author": "Xs!",
   "license": "ISC",
   "devDependencies": {
     "@types/electron": "^1.6.10",
     "@types/node": "^12.9.0",
+    "cross-env": "^7.0.2",
     "electron": "^9.2.1",
     "electron-builder": "^22.8.0",
     "rimraf": "^3.0.2",

@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "webpack"
+    "test": "webpack-dev-server --config ./webpack.dev.js ",
+    "build": "webpack"
   },
   "author": "",
   "license": "ISC",
@@ -18,7 +19,8 @@
     "url-loader": "^4.1.0",
     "vue-loader": "^16.0.0-beta.5",
     "webpack": "^4.44.1",
-    "webpack-cli": "^3.3.12"
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
     "muicss": "^0.10.2",
