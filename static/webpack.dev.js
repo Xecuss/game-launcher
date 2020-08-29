@@ -21,7 +21,7 @@ module.exports = {
         publicPath: '/',
         index: 'index.html',
         historyApiFallback: true,
-        port: 8082
+        port: 9000
     },
 
     resolve: {

@@ -25,4 +25,4 @@ compiler.hooks.afterEmit.tap('start-electron2', () => {
 
 let s = new WebpackDevServer(compiler, devServerOptions);
 
-s.listen(9000);
+s.listen(devServerOptions.port);
