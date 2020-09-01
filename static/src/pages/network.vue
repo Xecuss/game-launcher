@@ -27,7 +27,7 @@
                     </label>
                 </div>
                 <div class="mui-textfield mui-textfield--float-label" v-if="isLocal(item)">
-                    <input type="text" v-model="item.localServCommand">
+                    <input type="text" v-model="item.localServCommand" @click="focusHandle(item)">
                     <label>离线服务器启动脚本</label>
                 </div>
                 <div>
@@ -42,6 +42,7 @@
 import { inject, Ref, computed } from 'vue'
 import { useRouter } from 'vue-router';
 import { ILauncherConfig, INetworkConfig } from '../interface/config.interface';
+import { ipcRenderer } from 'electron';
 
 const localReg = /https?\:\/\/(localhost|127\.0\.0\.1)/;
 
@@ -64,6 +65,14 @@ export default {
                 name: ''
             };
             networks.push(temp);
+        }
+
+        function focusHandle(item: INetworkConfig){
+            let file = ipcRenderer.sendSync('choose-file');
+            console.log(file);
+            if(file){
+                item.localServCommand = file;
+            }
         }
 
         function isLocal(item: INetworkConfig): boolean{
@@ -92,7 +101,8 @@ export default {
             add,
             back,
             del,
-            isLocal
+            isLocal,
+            focusHandle
         }
     }
 }

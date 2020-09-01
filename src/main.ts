@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, dialog } from 'electron';
 
 async function main(){
     await app.whenReady();
@@ -27,6 +27,16 @@ async function main(){
 
     ipcMain.on('close', () => {
         mainWindow.close();
+    });
+
+    ipcMain.on('choose-file', (e) => {
+        let files = dialog.showOpenDialogSync({
+            title: '选择离线服务器文件',
+            filters: [
+                { name: '可执行文件', extensions: ['*.exe'] }
+            ]
+        });
+        e.returnValue = files?.[0];
     });
 }
 
