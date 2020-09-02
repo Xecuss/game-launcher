@@ -36,7 +36,7 @@ async function main(){
                 { name: '可执行文件', extensions: ['*.exe'] }
             ]
         });
-        e.returnValue = files?.[0];
+        e.reply('choose-file-reply', files?.[0]);
     });
 }
 

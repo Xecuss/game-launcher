@@ -27,7 +27,7 @@
                     </label>
                 </div>
                 <div class="mui-textfield mui-textfield--float-label" v-if="isLocal(item)">
-                    <input type="text" v-model="item.localServCommand" @click="focusHandle(item)">
+                    <input type="text" v-model="item.localServCommand" @click="focusHandle(item)" ref="localServInput">
                     <label>离线服务器启动脚本</label>
                 </div>
                 <div>
@@ -39,12 +39,21 @@
     </div>
 </template>
 <script lang="ts">
-import { inject, Ref, computed } from 'vue'
+import { inject, Ref, computed, ref } from 'vue'
 import { useRouter } from 'vue-router';
 import { ILauncherConfig, INetworkConfig } from '../interface/config.interface';
 import { ipcRenderer } from 'electron';
 
 const localReg = /https?\:\/\/(localhost|127\.0\.0\.1)/;
+
+function openFileDialog(): Promise<string | null>{
+    ipcRenderer.send('choose-file');
+    return new Promise((res, rej) => {
+        ipcRenderer.once('choose-file-reply', (e, arg)=> {
+            res(arg);
+        });
+    });
+}
 
 export default {
     setup(){
@@ -54,6 +63,8 @@ export default {
         let networks = conf.value.useAbleNetWorkConf;
 
         let router = useRouter();
+
+        let localServInput: Ref<HTMLElement | null> = ref(null);
 
         function add(){
             let temp: INetworkConfig = {
@@ -67,11 +78,15 @@ export default {
             networks.push(temp);
         }
 
-        function focusHandle(item: INetworkConfig){
-            let file = ipcRenderer.sendSync('choose-file');
+        async function focusHandle(item: INetworkConfig){
+            let file = await openFileDialog();
             console.log(file);
             if(file){
                 item.localServCommand = file;
+                if(localServInput.value !== null) {
+                    localServInput.value.classList.remove('mui--is-empty');
+                    localServInput.value.classList.add('mui--is-not-empty');
+                }
             }
         }
 
@@ -98,6 +113,7 @@ export default {
 
         return {
             networks,
+            localServInput,
             add,
             back,
             del,
