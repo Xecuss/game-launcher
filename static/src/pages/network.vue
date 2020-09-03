@@ -42,18 +42,9 @@
 import { inject, Ref, computed, ref } from 'vue'
 import { useRouter } from 'vue-router';
 import { ILauncherConfig, INetworkConfig } from '../interface/config.interface';
-import { ipcRenderer } from 'electron';
+import { openFileDialog } from '../lib/callSystemAPI';
 
 const localReg = /https?\:\/\/(localhost|127\.0\.0\.1)/;
-
-function openFileDialog(): Promise<string | null>{
-    ipcRenderer.send('choose-file');
-    return new Promise((res, rej) => {
-        ipcRenderer.once('choose-file-reply', (e, arg)=> {
-            res(arg);
-        });
-    });
-}
 
 export default {
     setup(){
@@ -79,7 +70,13 @@ export default {
         }
 
         async function focusHandle(item: INetworkConfig){
-            let file = await openFileDialog();
+            let file = await openFileDialog({
+                title: '选择离线服务器文件',
+                properties: ['openFile'],
+                filters: [
+                    { name: '可执行文件', extensions: ['*.exe'] }
+                ]
+            });
             console.log(file);
             if(file){
                 item.localServCommand = file;

@@ -20,15 +20,10 @@ import { defaultConf } from './data/defaultConfig';
 
 import { getLocalNetwork } from './lib/getLocalNetwork';
 import { readConfigOrDefault, writeConf } from './lib/readConfig';
-
-import { ipcRenderer } from 'electron';
+import { closeApp } from './lib/callSystemAPI';
 
 export default {
     setup(props: any, ctx: any){
-        function closeApp(){
-            ipcRenderer.send('close');
-        }
-
         let conf = ref(readConfigOrDefault('./sxLauncher.json', defaultConf));
 
         //注入全局配置

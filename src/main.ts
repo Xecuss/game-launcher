@@ -29,13 +29,8 @@ async function main(){
         mainWindow.close();
     });
 
-    ipcMain.on('choose-file', (e) => {
-        let files = dialog.showOpenDialogSync({
-            title: '选择离线服务器文件',
-            filters: [
-                { name: '可执行文件', extensions: ['*.exe'] }
-            ]
-        });
+    ipcMain.on('choose-file', (e, args) => {
+        let files = dialog.showOpenDialogSync(args);
         e.reply('choose-file-reply', files?.[0]);
     });
 }
