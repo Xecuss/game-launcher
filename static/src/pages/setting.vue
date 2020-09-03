@@ -60,7 +60,7 @@
         </div>
         <template v-if="conf.usePrinter">
         <div class="mui-textfield mui-textfield--float-label">
-            <input type="text" v-model="conf.printerPath">
+            <input type="text" v-model="conf.printerPath" @click="focusHandle(conf)" ref="cardSaveInput">
             <label>模拟印卡机保存位置</label>
         </div>
         </template>
@@ -74,6 +74,7 @@ import { getLocalNetwork } from '../lib/getLocalNetwork';
 import { exec } from 'child_process';
 import { ILauncherConfig } from '../interface/config.interface';
 import { useRunCommand } from '../lib/runCommand';
+import { openFileDialog } from '../lib/callSystemAPI';
 
 export default {
     setup(props: any, ctx: any){
@@ -86,16 +87,37 @@ export default {
             localNetworks,
             nowLocalNetwork
         } = useRunCommand(conf);
+        let cardSaveInput: Ref<null | HTMLElement> = ref(null);
 
         watchEffect(() => {
             if(conf) conf.value.nowLocalNetwork = nowLocalNetwork.value.name;
         });
 
+        async function focusHandle(item: ILauncherConfig){
+            let file = await openFileDialog({
+                title: '选择保存未知',
+                properties: ['openDirectory'],
+                filters: [
+                    { name: '可执行文件', extensions: ['*.exe'] }
+                ]
+            });
+            console.log(file);
+            if(file){
+                item.printerPath = file;
+                if(cardSaveInput.value !== null) {
+                    cardSaveInput.value.classList.remove('mui--is-empty');
+                    cardSaveInput.value.classList.add('mui--is-not-empty');
+                }
+            }
+        }
+
         return { 
             conf,
+            cardSaveInput,
             localNetworks,
             nowLocalNetwork,
-            runCommand
+            runCommand,
+            focusHandle
         };
     }
 }
