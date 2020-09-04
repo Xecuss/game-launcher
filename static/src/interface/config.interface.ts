@@ -13,6 +13,11 @@ export interface ILauncherConfig{
     //spice api选项，打开后可以通过工具远程控制spice
     api: boolean;
     apiPassword: string;
+    //多spice配置管理(Multi Spice Config Manage, MSCM)
+    enableMSCM: boolean;
+    nowUseSC: number;
+    useAbleSC: Array<ISpiceConfig>;
+    SCPath: string;
 }
 
 export interface IGameConfig{
@@ -42,4 +47,10 @@ export interface INetworkConfig{
     id: number;
     name: string;
     localServCommand?: string;
+}
+
+export interface ISpiceConfig{
+    name: string;
+    id: number;
+    filename: string;
 }

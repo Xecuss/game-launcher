@@ -51,6 +51,32 @@
         </div>
     </div>
 
+    <p class="block-title">spice</p>
+    <div class="mui-panel">
+        <div class="mui-checkbox">
+            <label>
+                <input type="checkbox" v-model="conf.enableMSCM"> 启用多Spice配置管理
+            </label>
+        </div>
+        <template v-if="conf.enableMSCM">
+        <div>
+        <div class="mui-select my-select">
+            <select v-model="conf.nowUseNetwork">
+                <option :value="-1">使用默认</option>
+                <option 
+                v-for="item in conf.useAbleSC" 
+                :key="item.id"
+                :value="item.id">
+                    {{ item.name || '无标题' }}
+                </option>
+            </select>
+            <label>外部网络</label>
+        </div>
+        <router-link to="/mscm" class="mui-btn mui-btn--raised mui-btn--primary" style="margin-left: 20px;">管理配置</router-link>
+        </div>
+        </template>
+    </div>
+
     <p class="block-title">杂项</p>
     <div class="mui-panel">
         <div class="mui-checkbox">

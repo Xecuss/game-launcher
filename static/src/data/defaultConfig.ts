@@ -13,5 +13,9 @@ export let defaultConf: ILauncherConfig = {
     screenShotPath: '',
     ea: false,
     api: false,
-    apiPassword: ''
+    apiPassword: '',
+    enableMSCM: false,
+    useAbleSC: [],
+    nowUseSC: -1,
+    SCPath: './SxLauncher/'
 }
