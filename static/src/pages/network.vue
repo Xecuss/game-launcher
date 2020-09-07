@@ -27,7 +27,7 @@
                     </label>
                 </div>
                 <div class="mui-textfield mui-textfield--float-label" v-if="isLocal(item)">
-                    <input type="text" v-model="item.localServCommand">
+                    <input type="text" v-model="item.localServCommand" @click="focusHandle(item)" ref="localServInput">
                     <label>离线服务器启动脚本</label>
                 </div>
                 <div>
@@ -39,9 +39,10 @@
     </div>
 </template>
 <script lang="ts">
-import { inject, Ref, computed } from 'vue'
+import { inject, Ref, computed, ref } from 'vue'
 import { useRouter } from 'vue-router';
 import { ILauncherConfig, INetworkConfig } from '../interface/config.interface';
+import { openFileDialog } from '../lib/callSystemAPI';
 
 const localReg = /https?\:\/\/(localhost|127\.0\.0\.1)/;
 
@@ -54,6 +55,8 @@ export default {
 
         let router = useRouter();
 
+        let localServInput: Ref<HTMLElement | null> = ref(null);
+
         function add(){
             let temp: INetworkConfig = {
                 id: new Date().valueOf(),
@@ -64,6 +67,24 @@ export default {
                 name: ''
             };
             networks.push(temp);
+        }
+
+        async function focusHandle(item: INetworkConfig){
+            let file = await openFileDialog({
+                title: '选择离线服务器文件',
+                properties: ['openFile'],
+                filters: [
+                    { name: '可执行文件', extensions: ['*.exe'] }
+                ]
+            });
+            console.log(file);
+            if(file){
+                item.localServCommand = file;
+                if(localServInput.value !== null) {
+                    localServInput.value.classList.remove('mui--is-empty');
+                    localServInput.value.classList.add('mui--is-not-empty');
+                }
+            }
         }
 
         function isLocal(item: INetworkConfig): boolean{
@@ -89,10 +110,12 @@ export default {
 
         return {
             networks,
+            localServInput,
             add,
             back,
             del,
-            isLocal
+            isLocal,
+            focusHandle
         }
     }
 }

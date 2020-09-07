@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, dialog } from 'electron';
 
 async function main(){
     await app.whenReady();
@@ -27,6 +27,11 @@ async function main(){
 
     ipcMain.on('close', () => {
         mainWindow.close();
+    });
+
+    ipcMain.on('choose-file', (e, args) => {
+        let files = dialog.showOpenDialogSync(args);
+        e.reply('choose-file-reply', files?.[0]);
     });
 }
 

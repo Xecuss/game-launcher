@@ -7,7 +7,7 @@
 import { inject, Ref } from 'vue';
 import { useRunCommand } from '../lib/runCommand';
 import { ILauncherConfig } from '../interface/config.interface';
-import { exec, spawn, ChildProcess } from 'child_process';
+import { exec, ChildProcess, spawn } from 'child_process';
 
 export default {
     setup(){
