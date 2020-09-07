@@ -19,7 +19,7 @@ import { ILauncherConfig } from './interface/config.interface';
 import { defaultConf } from './data/defaultConfig';
 
 import { getLocalNetwork } from './lib/getLocalNetwork';
-import { readConfigOrDefault, writeConf } from './lib/readConfig';
+import { readConfigOrDefault, safeCreateDir, writeConf } from './lib/readConfig';
 import { closeApp } from './lib/callSystemAPI';
 
 export default {
@@ -29,9 +29,20 @@ export default {
         //注入全局配置
         provide('globalConfig', conf);
 
+        //由于deep watch无法保存对象的旧值，所以手动保存
+        let oldEnableMSCM = conf.value.enableMSCM;
+
         //修改配置自动保存
         watch(conf, (obj) => {
-            if(obj) writeConf('./sxLauncher.json', conf.value);
+            if(obj) {
+                console.log(`${oldEnableMSCM} -> ${obj.enableMSCM}`);
+                writeConf('./sxLauncher.json', conf.value);
+                //当开启多spice配置管理的时候会尝试创建文件夹
+                if(!oldEnableMSCM && obj.enableMSCM){
+                    safeCreateDir(conf.value.SCPath);
+                }
+                oldEnableMSCM = conf.value.enableMSCM;
+            }
         }, {
             deep: true
         });

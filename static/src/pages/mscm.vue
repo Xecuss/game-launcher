@@ -9,7 +9,7 @@
                     <label>配置名称</label>
                 </div>
                 <div>
-                <a class="mui-btn mui-btn--primary mui-btn--raised .mui-form--inline">配置</a>
+                <a class="mui-btn mui-btn--primary mui-btn--raised .mui-form--inline" @click="spiceSetConfig(item)">配置</a>
                 <a class="mui-btn mui-btn--danger mui-btn--raised .mui-form--inline" @click="del(item)">删除</a>
                 </div>
             </div>
@@ -22,6 +22,8 @@ import { inject, Ref, computed, ref } from 'vue'
 import { useRouter } from 'vue-router';
 import { ILauncherConfig, ISpiceConfig } from '../interface/config.interface';
 import { openFileDialog } from '../lib/callSystemAPI';
+import { safeCreateDir, safeReadSC } from '../lib/readConfig';
+import { exec } from 'child_process';
 
 const localReg = /https?\:\/\/(localhost|127\.0\.0\.1)/;
 
@@ -37,10 +39,12 @@ export default {
         function add(){
             if(!conf) return;
 
+            //利用精确到毫秒的时间戳当id，重复概率极小
+            let id = new Date().valueOf();
             let temp: ISpiceConfig = {
-                id: new Date().valueOf(),
+                id,
                 name: '',
-                filename: `${conf.value.SCPath}`
+                filename: `${conf.value.SCPath}${id}.xml`
             };
             spiceConfigs.push(temp);
         }
@@ -58,11 +62,16 @@ export default {
             }
         }
 
+        function spiceSetConfig(item: ISpiceConfig){
+            exec(`spice64 -cfg -cfgpath ${safeReadSC(item.filename)}`);
+        }
+
         return {
             spiceConfigs,
             add,
             back,
-            del
+            del,
+            spiceSetConfig
         }
     }
 }

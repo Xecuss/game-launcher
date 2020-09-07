@@ -25,3 +25,33 @@ function SafeLoader<T>(conf: any, defaultConf: T): T{
     let trueConf = Object.assign({}, defaultConf, conf);
     return trueConf;
 }
+/**
+ * 安全的创建文件夹
+ */
+export function safeCreateDir(path: string): void{
+    try{
+        fs.mkdirSync(path, {
+            recursive: true
+        });
+    }
+    catch(e){
+        alert(`运行时报错！请将此错误信息反馈给Xs！${e}`);
+    }
+}
+
+/**
+ * 安全的读取spice配置文件
+ */
+export function safeReadSC(path: string): string{
+    let created: boolean = true;
+
+    try{ fs.accessSync(path); }
+    catch(e){ created = false; }
+
+    if(!created){
+        console.log(`created: ${path}`);
+        fs.writeFileSync(path, '');
+    }
+
+    return path;
+}

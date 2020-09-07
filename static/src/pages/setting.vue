@@ -61,7 +61,7 @@
         <template v-if="conf.enableMSCM">
         <div>
         <div class="mui-select my-select">
-            <select v-model="conf.nowUseNetwork">
+            <select v-model="conf.nowUseSC">
                 <option :value="-1">使用默认</option>
                 <option 
                 v-for="item in conf.useAbleSC" 
