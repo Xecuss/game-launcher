@@ -30,6 +30,11 @@ export function useRunCommand(conf: Ref<ILauncherConfig>) {
             res += network.http11 ? ' -http11 1' : ' -http11 0';
             if(network.pcbId) res += ` -p ${network.pcbId}`;
         }
+        if(nowLocalNetwork && nowLocalNetwork.value.v4){
+            let v4 = nowLocalNetwork.value.v4;
+            res += ` -network ${v4.address}`;
+            res += ` -subnet ${v4.netmask}`;
+        }
         let sc = conf.value.useAbleSC.find( x => x.id === conf.value.nowUseSC);
         if(sc){
             res += ` -cfgpath ${sc.filename}`;
