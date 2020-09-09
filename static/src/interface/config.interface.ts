@@ -1,4 +1,5 @@
 export interface ILauncherConfig{
+    useSpice32: boolean;
     use720p: boolean;
     window: boolean;
     usePrinter: boolean;

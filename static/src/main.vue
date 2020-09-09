@@ -20,7 +20,7 @@ import { defaultConf } from './data/defaultConfig';
 
 import { getLocalNetwork } from './lib/getLocalNetwork';
 import { readConfigOrDefault, safeCreateDir, writeConf } from './lib/readConfig';
-import { closeApp } from './lib/callSystemAPI';
+import { closeApp, getScreens } from './lib/callSystemAPI';
 
 export default {
     setup(props: any, ctx: any){
@@ -35,7 +35,6 @@ export default {
         //修改配置自动保存
         watch(conf, (obj) => {
             if(obj) {
-                console.log(`${oldEnableMSCM} -> ${obj.enableMSCM}`);
                 writeConf('./sxLauncher.json', conf.value);
                 //当开启多spice配置管理的时候会尝试创建文件夹
                 if(!oldEnableMSCM && obj.enableMSCM){

@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { join } from 'path';
 
 export function readConfigOrDefault<T>(path: string, defaultConf: T): T{
     try{
@@ -50,6 +51,8 @@ export function safeReadSC(path: string): string{
 
     if(!created){
         console.log(`created: ${path}`);
+        let folderPath = join(path, '../');
+        safeCreateDir(folderPath);
         fs.writeFileSync(path, '');
     }
 

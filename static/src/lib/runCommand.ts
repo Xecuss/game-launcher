@@ -16,6 +16,7 @@ export function useRunCommand(conf: Ref<ILauncherConfig>) {
 
     let runCommand = computed(() => {
         let res = 'spice64';
+        if(conf.value.useSpice32) res = 'spice';
         if(conf.value.use720p) res += ` -sdvx720`;
         if(conf.value.window) res += ` -w`;
         if(conf.value.usePrinter){

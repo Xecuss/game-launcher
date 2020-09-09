@@ -81,6 +81,11 @@
     <div class="mui-panel">
         <div class="mui-checkbox">
             <label>
+                <input type="checkbox" v-model="conf.useSpice32"> 使用32位spice(四代及以下勾选)
+            </label>
+        </div>
+        <div class="mui-checkbox">
+            <label>
                 <input type="checkbox" v-model="conf.usePrinter"> 模拟印卡机
             </label>
         </div>

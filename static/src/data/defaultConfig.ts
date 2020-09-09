@@ -1,6 +1,7 @@
 import { ILauncherConfig } from "../interface/config.interface";
 
 export let defaultConf: ILauncherConfig = {
+    useSpice32: false,
     use720p: false,
     window: false,
     usePrinter: true,
