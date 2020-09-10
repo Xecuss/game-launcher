@@ -63,7 +63,9 @@ export default {
         }
 
         function spiceSetConfig(item: ISpiceConfig){
-            exec(`spice64 -cfg -cfgpath ${safeReadSC(item.filename)}`);
+            let cmdName = 'spice64';
+            if(conf?.value.useSpice32) cmdName = 'spice';
+            exec(`${cmdName} -cfg -cfgpath ${safeReadSC(item.filename)}`);
         }
 
         return {
