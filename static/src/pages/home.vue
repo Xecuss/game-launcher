@@ -4,7 +4,7 @@
     </div>
 </template>
 <script lang="ts">
-import { inject, Ref } from 'vue';
+import { inject, Ref, ref } from 'vue';
 import { useRunCommand } from '../lib/runCommand';
 import { ILauncherConfig } from '../interface/config.interface';
 import { exec, ChildProcess, spawn } from 'child_process';
@@ -15,10 +15,12 @@ export default {
 
         if(!conf) return {};
 
+        let nowSelect = ref(conf.value.lastUseConfig);
+
         let {
             servCommand,
             runCommand,
-        } = useRunCommand(conf);
+        } = useRunCommand(conf, nowSelect);
 
         let localServProcess: ChildProcess | null = null;
 

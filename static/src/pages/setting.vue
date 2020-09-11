@@ -113,18 +113,21 @@ export default {
 
         if(!conf) return {};
 
+        let nowSelect = ref(conf.value.lastUseConfig);
+
         let {
             runCommand,
             localNetworks,
-            nowLocalNetwork
-        } = useRunCommand(conf);
+            nowLocalNetwork,
+            useConf
+        } = useRunCommand(conf, nowSelect);
         let cardSaveInput: Ref<null | HTMLElement> = ref(null);
 
         watchEffect(() => {
-            if(conf) conf.value.nowLocalNetwork = nowLocalNetwork.value.name;
+            if(conf) useConf.nowLocalNetwork = nowLocalNetwork.value.name;
         });
 
-        async function focusHandle(item: ILauncherConfig){
+        async function focusHandle(){
             let file = await openFileDialog({
                 title: '选择保存未知',
                 properties: ['openDirectory'],
@@ -132,9 +135,8 @@ export default {
                     { name: '可执行文件', extensions: ['*.exe'] }
                 ]
             });
-            console.log(file);
             if(file){
-                item.printerPath = file;
+                useConf.printerPath = file;
                 if(cardSaveInput.value !== null) {
                     cardSaveInput.value.classList.remove('mui--is-empty');
                     cardSaveInput.value.classList.add('mui--is-not-empty');

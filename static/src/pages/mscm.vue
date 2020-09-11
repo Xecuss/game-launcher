@@ -56,15 +56,19 @@ export default {
             let idx = spiceConfigs.findIndex(x => x === item);
             if(idx !== -1){
                 let res = spiceConfigs.splice(idx, 1);
-                if(conf && conf.value.nowUseSC === res[0].id){
-                    conf.value.nowUseSC = -1;
+
+                if(!conf) return;
+
+                for(let innerConf of conf.value.configs){
+                    if(innerConf.nowUseSC === res[0].id){
+                        innerConf.nowUseSC = -1;
+                    }
                 }
             }
         }
 
         function spiceSetConfig(item: ISpiceConfig){
             let cmdName = 'spice64';
-            if(conf?.value.useSpice32) cmdName = 'spice';
             exec(`${cmdName} -cfg -cfgpath ${safeReadSC(item.filename)}`);
         }
 

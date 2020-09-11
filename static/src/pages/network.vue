@@ -102,8 +102,13 @@ export default {
             let idx = networks.findIndex(x => x === item);
             if(idx !== -1){
                 let res = networks.splice(idx, 1);
-                if(conf && conf.value.nowUseNetwork === res[0].id){
-                    conf.value.nowUseNetwork = -1;
+
+                if(!conf) return;
+
+                for(let innerConf of conf.value.configs){
+                    if(innerConf.nowUseNetwork === res[0].id){
+                        innerConf.nowUseNetwork = -1;
+                    }
                 }
             }
         }

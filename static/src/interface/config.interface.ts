@@ -1,22 +1,10 @@
 export interface ILauncherConfig{
-    useSpice32: boolean;
-    use720p: boolean;
-    window: boolean;
-    usePrinter: boolean;
-    printerPath: string;
-    printerFormat: 'png' | 'bmp' | 'tga' | 'jpg';
-    printerClear: boolean;
     useAbleNetWorkConf: Array<INetworkConfig>;
-    nowUseNetwork: number;
-    nowLocalNetwork: string;
-    screenShotPath: string;
-    ea: boolean;
-    //spice api选项，打开后可以通过工具远程控制spice
-    api: boolean;
     apiPassword: string;
+    configs: Array<IGameConfig>;
+    lastUseConfig: number;
     //多spice配置管理(Multi Spice Config Manage, MSCM)
     enableMSCM: boolean;
-    nowUseSC: number;
     useAbleSC: Array<ISpiceConfig>;
     SCPath: string;
 }
@@ -35,9 +23,11 @@ export interface IGameConfig{
     nowLocalNetwork: string;
     screenShotPath: string;
     ea: boolean;
+    useSpice32: boolean;
     //spice api选项，打开后可以通过工具远程控制spice
     api: boolean;
     apiPassword: string;
+    nowUseSC: number;
 }
 
 export interface INetworkConfig{
