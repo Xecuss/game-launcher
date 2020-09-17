@@ -22,7 +22,6 @@ export let defaultGameConfig: IGameConfig = {
 
 export let defaultConf: ILauncherConfig = {
     useAbleNetWorkConf: [],
-    apiPassword: '',
     enableMSCM: false,
     lastUseConfig: -1,
     configs: [defaultGameConfig],

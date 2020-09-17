@@ -1,7 +1,8 @@
 import fs from 'fs';
 import { join } from 'path';
+import { IGameConfig, ILauncherConfig } from '../interface/config.interface';
 
-export function readConfigOrDefault<T>(path: string, defaultConf: T): T{
+export function readConfigOrDefault(path: string, defaultConf: ILauncherConfig): ILauncherConfig{
     try{
         let res = fs.readFileSync(path);
         let rawConf = JSON.parse(res.toString());
@@ -22,8 +23,38 @@ export function writeConf<T>(path: string, conf: T){
  * @param conf 读取到的原始配置
  * @param defaultConf 默认配置
  */
-function SafeLoader<T>(conf: any, defaultConf: T): T{
-    let trueConf = Object.assign({}, defaultConf, conf);
+function SafeLoader(conf: any, defaultConf: ILauncherConfig): ILauncherConfig{
+    let trueConf: ILauncherConfig;
+    //如果不包含配置组则认为是老版本的配置
+    if(!conf.configs){
+        let defaultGameConfig = defaultConf.configs[0];
+        let gameConfig: any = {};
+        //从平铺的配置创建出gameConfig
+        for(let key in defaultGameConfig){
+            if(conf[key] !== undefined){
+                gameConfig[key] = conf[key];
+            }
+            else{
+                gameConfig[key] = defaultGameConfig[key as keyof IGameConfig];
+            }
+        }
+        let tempConf: any = Object.assign({}, defaultConf);
+        for(let key in defaultConf){
+            if(conf[key] !== undefined){
+                tempConf[key] = conf[key];
+            }
+            else{
+                tempConf[key] = defaultConf[key as keyof ILauncherConfig];
+            }
+        }
+        tempConf.configs = [gameConfig];
+        trueConf = tempConf as ILauncherConfig;
+        console.log('配置为旧版！');
+    }
+    else{
+        trueConf = Object.assign({}, defaultConf, conf);
+        console.log('配置为新版！');
+    }
     return trueConf;
 }
 /**

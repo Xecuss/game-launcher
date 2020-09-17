@@ -1,6 +1,5 @@
 export interface ILauncherConfig{
     useAbleNetWorkConf: Array<INetworkConfig>;
-    apiPassword: string;
     configs: Array<IGameConfig>;
     lastUseConfig: number;
     //多spice配置管理(Multi Spice Config Manage, MSCM)

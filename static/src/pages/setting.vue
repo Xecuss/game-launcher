@@ -9,12 +9,12 @@
     <div class="mui-panel">
         <div class="mui-checkbox">
             <label>
-                <input type="checkbox" v-model="conf.use720p"> 强制720p分辨率
+                <input type="checkbox" v-model="useConf.use720p"> 强制720p分辨率
             </label>
         </div>
         <div class="mui-checkbox">
             <label>
-                <input type="checkbox" v-model="conf.window"> 窗口模式
+                <input type="checkbox" v-model="useConf.window"> 窗口模式
             </label>
         </div>
     </div>
@@ -36,7 +36,7 @@
         </div>
         <div>
         <div class="mui-select my-select">
-            <select v-model="conf.nowUseNetwork">
+            <select v-model="useConf.nowUseNetwork">
                 <option :value="-1">使用ea3(默认)</option>
                 <option 
                 v-for="item in conf.useAbleNetWorkConf" 
@@ -61,7 +61,7 @@
         <template v-if="conf.enableMSCM">
         <div>
         <div class="mui-select my-select">
-            <select v-model="conf.nowUseSC">
+            <select v-model="useConf.nowUseSC">
                 <option :value="-1">使用默认</option>
                 <option 
                 v-for="item in conf.useAbleSC" 
@@ -81,17 +81,17 @@
     <div class="mui-panel">
         <div class="mui-checkbox">
             <label>
-                <input type="checkbox" v-model="conf.useSpice32"> 使用32位spice(四代及以下勾选)
+                <input type="checkbox" v-model="useConf.useSpice32"> 使用32位spice(四代及以下勾选)
             </label>
         </div>
         <div class="mui-checkbox">
             <label>
-                <input type="checkbox" v-model="conf.usePrinter"> 模拟印卡机
+                <input type="checkbox" v-model="useConf.usePrinter"> 模拟印卡机
             </label>
         </div>
-        <template v-if="conf.usePrinter">
+        <template v-if="useConf.usePrinter">
         <div class="mui-textfield mui-textfield--float-label">
-            <input type="text" v-model="conf.printerPath" @click="focusHandle(conf)" ref="cardSaveInput">
+            <input type="text" v-model="useConf.printerPath" @click="focusHandle()" ref="cardSaveInput">
             <label>模拟印卡机保存位置</label>
         </div>
         </template>
@@ -146,6 +146,7 @@ export default {
 
         return { 
             conf,
+            useConf,
             cardSaveInput,
             localNetworks,
             nowLocalNetwork,

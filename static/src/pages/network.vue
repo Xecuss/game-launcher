@@ -28,7 +28,7 @@
                 </div>
                 <div class="mui-textfield mui-textfield--float-label" v-if="isLocal(item)">
                     <input type="text" v-model="item.localServCommand" @click="focusHandle(item)" ref="localServInput">
-                    <label>离线服务器启动脚本</label>
+                    <label>离线服务器位置</label>
                 </div>
                 <div>
                 <a class="mui-btn mui-btn--danger mui-btn--raised" @click="del(item)">删除</a>
