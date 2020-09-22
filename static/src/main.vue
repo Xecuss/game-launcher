@@ -2,7 +2,7 @@
     <div id="main-container"  spellcheck="false">
         <top-banner @close="closeApp"/>
         <div class="content">
-            <my-nav />
+            <my-nav :configs="configs"/>
             <router-view />
         </div>
     </div>
@@ -51,6 +51,7 @@ export default {
         router.push('/');
 
         return { 
+            configs: conf.value.configs,
             closeApp
         };
     },

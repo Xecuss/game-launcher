@@ -2,14 +2,20 @@
     <div class="nav">
         <router-link to="/" class="nav-item"><i class="fa fa-home" /> 首页</router-link>
         <router-link to="/settings" class="nav-item"><i class="fa fa-cog"/> 设置</router-link>
+        <div class="config-item" v-for="item in configs" :key="item.id">{{ item.name }}</div>
     </div>
 </template>
 <script lang="ts">
-export default{
+import { defineComponent } from "vue"
+
+export default defineComponent({
+    props: {
+        configs: Array
+    },
     setup(){
         return {}
     }
-}
+});
 </script>
 <style scoped>
 .nav{
@@ -17,7 +23,7 @@ export default{
     background-color: rgba(255, 255, 255, 0.4);
     border-right: 1px solid rgba(0, 0, 0, 0.2);
 }
-.nav .nav-item{
+.nav .nav-item, .nav .config-item{
     display: block;
     box-sizing: border-box;
     height: 40px;
