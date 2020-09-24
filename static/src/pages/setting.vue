@@ -100,6 +100,7 @@
 </template>
 <script lang="ts">
 import { ref, reactive, computed, inject, watchEffect, Ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { ILocalNetwork } from '../interface/localNet.interface';
 import { getLocalNetwork } from '../lib/getLocalNetwork';
 import { exec } from 'child_process';
@@ -110,10 +111,11 @@ import { openFileDialog } from '../lib/callSystemAPI';
 export default {
     setup(props: any, ctx: any){
         let conf = inject<Ref<ILauncherConfig>>('globalConfig');
+        const router = useRouter();
 
         if(!conf) return {};
 
-        let nowSelect = ref(conf.value.lastUseConfig);
+        let nowSelect: Ref<number> = ref(Number(router.currentRoute.value.query));
 
         let {
             runCommand,
