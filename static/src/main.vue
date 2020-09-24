@@ -2,14 +2,15 @@
     <div id="main-container"  spellcheck="false">
         <top-banner @close="closeApp"/>
         <div class="content">
-            <my-nav :configs="configs"/>
-            <router-view />
+            <my-nav :configs="configs" @start="start"/>
+            <router-view @start="start"/>
         </div>
     </div>
 </template>
 <script lang="ts">
 import { provide, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
+import { ChildProcess, exec, spawn } from 'child_process';
 
 import topBanner from './components/topBanner.vue';
 import Nav from './components/nav.vue';
@@ -18,6 +19,7 @@ import { ILocalNetwork } from './interface/localNet.interface';
 import { ILauncherConfig } from './interface/config.interface';
 import { defaultConf } from './data/defaultConfig';
 
+import { useRunCommand } from './lib/runCommand';
 import { getLocalNetwork } from './lib/getLocalNetwork';
 import { readConfigOrDefault, safeCreateDir, writeConf } from './lib/readConfig';
 import { closeApp, getScreens } from './lib/callSystemAPI';
@@ -25,6 +27,11 @@ import { closeApp, getScreens } from './lib/callSystemAPI';
 export default {
     setup(props: any, ctx: any){
         let conf = ref(readConfigOrDefault('./sxLauncher.json', defaultConf));
+        let nowSelect = ref(conf.value.lastUseConfig);
+        let {
+            servCommand,
+            runCommand,
+        } = useRunCommand(conf, nowSelect);
 
         //注入全局配置
         provide('globalConfig', conf);
@@ -50,9 +57,26 @@ export default {
 
         router.push('/');
 
+        let localServProcess: ChildProcess | null = null;
+
+        function start(id?: number){
+            if(id) nowSelect.value = id;
+            console.log(runCommand.value);
+            if(servCommand.value){
+                localServProcess = spawn(servCommand.value);
+            }
+            exec(runCommand.value, () => {
+                //当游戏终止的时候终止离线服务器进程
+                if(localServProcess !== null){
+                    localServProcess.kill();
+                }
+            });
+        }
+
         return { 
             configs: conf.value.configs,
-            closeApp
+            closeApp,
+            start
         };
     },
     components: {

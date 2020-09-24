@@ -4,7 +4,7 @@
         <router-link to="/settings" class="nav-item"><i class="fa fa-cog"/> 设置</router-link>-->
         <div class="config-item" v-for="item in configs" :key="item.id">
             {{ item.name }}
-            <a class="opt-btn"><i class="fa fa-play"/></a>
+            <a class="opt-btn" @click="requestStart(item.id)"><i class="fa fa-play"/></a>
             <a class="opt-btn" @click="toSetting(item.id)"><i class="fa fa-cog"/></a>
         </div>
     </div>
@@ -28,6 +28,7 @@ export default defineComponent({
             ctx.emit('start', id);
         }
         return {
+            requestStart,
             toSetting
         }
     }
