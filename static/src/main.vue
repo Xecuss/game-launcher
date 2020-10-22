@@ -2,7 +2,7 @@
     <div id="main-container"  spellcheck="false">
         <top-banner @close="closeApp"/>
         <div class="content">
-            <my-nav :configs="configs" @start="start"/>
+            <my-nav :configs="configs" @start="start" @add="addConfig"/>
             <router-view @start="start"/>
         </div>
     </div>
@@ -17,7 +17,7 @@ import Nav from './components/nav.vue';
 
 import { ILocalNetwork } from './interface/localNet.interface';
 import { ILauncherConfig } from './interface/config.interface';
-import { defaultConf } from './data/defaultConfig';
+import { defaultConf, defaultGameConfig } from './data/defaultConfig';
 
 import { useRunCommand } from './lib/runCommand';
 import { getLocalNetwork } from './lib/getLocalNetwork';
@@ -73,9 +73,16 @@ export default {
             });
         }
 
+        function addConfig(){
+            let newConfig = Object.assign({}, defaultGameConfig);
+            newConfig.id = new Date().valueOf();
+            conf.value.configs.push(newConfig);
+        }
+
         return { 
             configs: conf.value.configs,
             closeApp,
+            addConfig,
             start
         };
     },

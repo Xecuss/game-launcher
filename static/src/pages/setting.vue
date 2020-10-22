@@ -100,11 +100,15 @@
         </div>
         </template>
     </div>
+    <div class="action-btn-group">
+        <button class="mui-btn mui-btn--raised mui-btn--danger"><i class="fa fa-trash-o"/> 删除此配置</button>
+        <button class="mui-btn mui-btn--raised mui-btn--primary">生成批处理</button>
+    </div>
 </div>
 </template>
 <script lang="ts">
 import { ref, reactive, computed, inject, watchEffect, Ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, onBeforeRouteUpdate } from 'vue-router';
 import { ILocalNetwork } from '../interface/localNet.interface';
 import { getLocalNetwork } from '../lib/getLocalNetwork';
 import { exec } from 'child_process';
@@ -119,7 +123,7 @@ export default {
 
         if(!conf) return {};
 
-        let nowSelect: Ref<number> = ref(Number(router.currentRoute.value.query));
+        let nowSelect: Ref<number> = ref(Number(router.currentRoute.value.query.id));
 
         let {
             runCommand,
@@ -130,7 +134,11 @@ export default {
         let cardSaveInput: Ref<null | HTMLElement> = ref(null);
 
         watchEffect(() => {
-            if(conf) useConf.nowLocalNetwork = nowLocalNetwork.value.name;
+            if(conf) useConf.value.nowLocalNetwork = nowLocalNetwork.value.name;
+        });
+
+        onBeforeRouteUpdate((to, from) => {
+            nowSelect.value = Number(to.query.id);
         });
 
         async function focusHandle(){
@@ -142,7 +150,7 @@ export default {
                 ]
             });
             if(file){
-                useConf.printerPath = file;
+                useConf.value.printerPath = file;
                 if(cardSaveInput.value !== null) {
                     cardSaveInput.value.classList.remove('mui--is-empty');
                     cardSaveInput.value.classList.add('mui--is-not-empty');

@@ -2,7 +2,7 @@
     <div class="nav">
         <div class="config-top">
             <router-link to="/" class="top-btn"><i class="fa fa-home" /></router-link>
-            <a class="top-btn"><i class="fa fa-plus"/></a>
+            <a class="top-btn" @click="addHandle"><i class="fa fa-plus"/></a>
         </div>
         <div class="config-item" v-for="item in configs" :key="item.id">
             <span class="config-name">{{ item.name }}</span>
@@ -23,15 +23,24 @@ export default defineComponent({
         const router = useRouter();
 
         function toSetting(id: number){
-            router.push(`/settings?id=${id}`);
+            router.push({ 
+                path: '/settings',
+                query: { id }
+            });
         }
 
         function requestStart(id: number){
             ctx.emit('start', id);
         }
+
+        function addHandle(){
+            ctx.emit('add');
+        }
+
         return {
             requestStart,
-            toSetting
+            toSetting,
+            addHandle
         }
     }
 });
