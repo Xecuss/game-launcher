@@ -1,9 +1,11 @@
 <template>
     <div class="nav">
-        <!--<router-link to="/" class="nav-item"><i class="fa fa-home" /> 首页</router-link>
-        <router-link to="/settings" class="nav-item"><i class="fa fa-cog"/> 设置</router-link>-->
+        <div class="config-top">
+            <router-link to="/" class="top-btn"><i class="fa fa-home" /></router-link>
+            <a class="top-btn"><i class="fa fa-plus"/></a>
+        </div>
         <div class="config-item" v-for="item in configs" :key="item.id">
-            {{ item.name }}
+            <span class="config-name">{{ item.name }}</span>
             <a class="opt-btn" @click="requestStart(item.id)"><i class="fa fa-play"/></a>
             <a class="opt-btn" @click="toSetting(item.id)"><i class="fa fa-cog"/></a>
         </div>
@@ -46,6 +48,17 @@ export default defineComponent({
     cursor: pointer;
     margin-left: 10px;
 }
+.nav .config-top{
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 5px 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+.nav .config-top .top-btn{
+    color: rgba(0, 0, 0, 0.8);
+    cursor: pointer;
+}
 .nav .nav-item, .nav .config-item{
     display: block;
     box-sizing: border-box;
@@ -57,5 +70,15 @@ export default defineComponent({
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     text-align: center;
     white-space: nowrap;
+    cursor: pointer;
+}
+.nav .config-item .config-name{
+    max-width: 100px;
+    min-width: 50px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: inline-block;
+    vertical-align: top;
 }
 </style>

@@ -89,6 +89,10 @@
                 <input type="checkbox" v-model="useConf.usePrinter"> 模拟印卡机
             </label>
         </div>
+        <div class="mui-textfield mui-textfield--float-label">
+            <input type="text" v-model="useConf.name">
+            <label>配置名称</label>
+        </div>
         <template v-if="useConf.usePrinter">
         <div class="mui-textfield mui-textfield--float-label">
             <input type="text" v-model="useConf.printerPath" @click="focusHandle()" ref="cardSaveInput">
