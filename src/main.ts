@@ -33,6 +33,11 @@ async function main(){
         let files = dialog.showOpenDialogSync(args);
         e.reply('choose-file-reply', files?.[0]);
     });
+
+    ipcMain.on('message-box', (e, args) => {
+        let btnOffset = dialog.showMessageBoxSync(args);
+        e.reply('message-box-reply', btnOffset);
+    });
 }
 
 main();

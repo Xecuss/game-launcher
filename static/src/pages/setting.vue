@@ -101,23 +101,24 @@
         </template>
     </div>
     <div class="action-btn-group">
-        <button class="mui-btn mui-btn--raised mui-btn--danger"><i class="fa fa-trash-o"/> 删除此配置</button>
-        <button class="mui-btn mui-btn--raised mui-btn--primary">生成批处理</button>
+        <button class="mui-btn mui-btn--raised mui-btn--danger" @click="deleteHandle"><i class="fa fa-trash-o"/> 删除此配置</button>
+        <button class="mui-btn mui-btn--raised mui-btn--primary" @click="createBatchFile">生成批处理</button>
     </div>
 </div>
 </template>
 <script lang="ts">
-import { ref, reactive, computed, inject, watchEffect, Ref } from 'vue';
+import { ref, reactive, computed, inject, watchEffect, Ref, defineComponent } from 'vue';
 import { useRouter, onBeforeRouteUpdate } from 'vue-router';
 import { ILocalNetwork } from '../interface/localNet.interface';
 import { getLocalNetwork } from '../lib/getLocalNetwork';
 import { exec } from 'child_process';
-import { ILauncherConfig } from '../interface/config.interface';
+import { IGameConfig, ILauncherConfig } from '../interface/config.interface';
 import { useRunCommand } from '../lib/runCommand';
-import { openFileDialog } from '../lib/callSystemAPI';
+import { openFileDialog, openMessageBox } from '../lib/callSystemAPI';
+import { promises as fs } from 'fs';
 
-export default {
-    setup(props: any, ctx: any){
+export default defineComponent({
+    setup(props, ctx){
         let conf = inject<Ref<ILauncherConfig>>('globalConfig');
         const router = useRouter();
 
@@ -158,6 +159,35 @@ export default {
             }
         }
 
+        async function deleteHandle(){
+            let res = await openMessageBox({
+                type: 'warning',
+                title: '警告',
+                defaultId: 1,
+                message: `确定要删除配置[${useConf.value.name}]吗？您将会失去该配置项`,
+                buttons: ['取消', '确定']
+            });
+            if(res === 1) ctx.emit('delete', useConf.value.id);
+        }
+
+        async function createBatchFile(){
+            let command = '@echo "create by sxLauncher :)"\n';
+            command += `${ runCommand.value }\n`;
+
+            let fix = new Date().toLocaleString().slice(-2);
+            let fileName = `./start-${useConf.value.name}-${fix}.bat`;
+
+            await fs.writeFile(fileName, command);
+
+            await openMessageBox({
+                type: 'info',
+                title: '生成批处理',
+                defaultId: 0,
+                message: `已生成批处理[${fileName}]`,
+                buttons: ['确定']
+            });
+        }
+
         return { 
             conf,
             useConf,
@@ -165,10 +195,12 @@ export default {
             localNetworks,
             nowLocalNetwork,
             runCommand,
-            focusHandle
+            focusHandle,
+            deleteHandle,
+            createBatchFile
         };
     }
-}
+})
 </script>
 <style scoped>
 .page{

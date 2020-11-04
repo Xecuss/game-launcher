@@ -3,7 +3,7 @@
         <top-banner @close="closeApp"/>
         <div class="content">
             <my-nav :configs="configs" @start="start" @add="addConfig"/>
-            <router-view @start="start"/>
+            <router-view @start="start" @delete="delConfig"/>
         </div>
     </div>
 </template>
@@ -61,10 +61,10 @@ export default {
 
         function start(id?: number){
             if(id) nowSelect.value = id;
-            console.log(runCommand.value);
             if(servCommand.value){
                 localServProcess = spawn(servCommand.value);
             }
+            console.log(`run: ${runCommand.value}`);
             exec(runCommand.value, () => {
                 //当游戏终止的时候终止离线服务器进程
                 if(localServProcess !== null){
@@ -79,10 +79,16 @@ export default {
             conf.value.configs.push(newConfig);
         }
 
+        function delConfig(id: number){
+            let offset = conf.value.configs.findIndex( x => x.id === id);
+            if(offset !== -1) conf.value.configs.splice(offset, 1);
+        }
+
         return { 
             configs: conf.value.configs,
             closeApp,
             addConfig,
+            delConfig,
             start
         };
     },

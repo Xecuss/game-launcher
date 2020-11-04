@@ -5,9 +5,11 @@
             <a class="top-btn" @click="addHandle"><i class="fa fa-plus"/></a>
         </div>
         <div class="config-item" v-for="item in configs" :key="item.id">
-            <span class="config-name">{{ item.name }}</span>
-            <a class="opt-btn" @click="requestStart(item.id)"><i class="fa fa-play"/></a>
-            <a class="opt-btn" @click="toSetting(item.id)"><i class="fa fa-cog"/></a>
+            <p class="config-name">{{ item.name }}</p>
+            <div class="config-opt">
+                <a class="opt-btn" @click="requestStart(item.id)"><i class="fa fa-play"/></a>
+                <a class="opt-btn" @click="toSetting(item.id)"><i class="fa fa-cog"/></a>
+            </div>
         </div>
     </div>
 </template>
@@ -69,7 +71,7 @@ export default defineComponent({
     cursor: pointer;
 }
 .nav .nav-item, .nav .config-item{
-    display: block;
+    display: flex;
     box-sizing: border-box;
     height: 40px;
     color: rgba(0, 0, 0, 0.8);
@@ -77,7 +79,6 @@ export default defineComponent({
     padding: 10px;
     line-height: 20px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    text-align: center;
     white-space: nowrap;
     cursor: pointer;
 }
@@ -87,7 +88,8 @@ export default defineComponent({
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    display: inline-block;
     vertical-align: top;
+    flex-grow: 1;
+    text-align: left;
 }
 </style>

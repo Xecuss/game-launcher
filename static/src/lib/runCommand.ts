@@ -1,4 +1,4 @@
-import { computed, Ref, ref } from 'vue';
+import { computed, watchEffect, Ref, ref } from 'vue';
 import { ILauncherConfig } from '../interface/config.interface';
 import { getLocalNetwork } from './getLocalNetwork';
 import { defaultGameConfig } from '../data/defaultConfig';
@@ -9,7 +9,7 @@ export function useRunCommand(conf: Ref<ILauncherConfig>, selectConf: Ref<number
     let nowLocalNetwork = ref(localNetworks.value[0]);
     let useConf = computed(() => {
         return conf.value.configs.find( x => x.id === selectConf.value) || conf.value.configs[0] || defaultGameConfig;
-    });
+    })
 
     for(let item of localNetworks.value){
         if(item.name === useConf.value.nowLocalNetwork){
