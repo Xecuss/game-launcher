@@ -1,10 +1,10 @@
 <template>
     <div class="nav">
         <div class="config-top">
-            <router-link to="/" class="top-btn"><i class="fa fa-home" /></router-link>
+            <a class="top-btn" @click="home"><i class="fa fa-home" /></a>
             <a class="top-btn" @click="addHandle"><i class="fa fa-plus"/></a>
         </div>
-        <div class="config-item" v-for="item in configs" :key="item.id">
+        <div class="config-item" v-for="item in configs" :key="item.id" :class="{active: nowSelect === item.id}">
             <p class="config-name">{{ item.name }}</p>
             <div class="config-opt">
                 <a class="opt-btn" @click="requestStart(item.id)"><i class="fa fa-play"/></a>
@@ -14,7 +14,7 @@
     </div>
 </template>
 <script lang="ts">
-import { defineComponent } from "vue"
+import { defineComponent, Ref, ref, watchEffect } from "vue"
 import { useRouter } from 'vue-router';
 
 export default defineComponent({
@@ -24,11 +24,21 @@ export default defineComponent({
     setup({}, ctx){
         const router = useRouter();
 
-        function toSetting(id: number){
-            router.push({ 
+        let nowSelect: Ref<number> = ref(0);
+
+        async function toSetting(id: number){
+            await router.push({ 
                 path: '/settings',
                 query: { id }
             });
+            nowSelect.value = id;
+        }
+
+        async function home(){
+            await router.push({ 
+                path: '/'
+            });
+            nowSelect.value = 0;
         }
 
         function requestStart(id: number){
@@ -40,9 +50,11 @@ export default defineComponent({
         }
 
         return {
+            nowSelect,
             requestStart,
             toSetting,
-            addHandle
+            addHandle,
+            home
         }
     }
 });
@@ -81,6 +93,9 @@ export default defineComponent({
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     white-space: nowrap;
     cursor: pointer;
+}
+.nav .nav-item, .nav .config-item.active{
+    background: rgba(0, 0, 0, 0.1);
 }
 .nav .config-item .config-name{
     max-width: 100px;

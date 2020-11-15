@@ -17,7 +17,8 @@ export let defaultGameConfig: IGameConfig = {
     api: false,
     apiPassword: '',
     useSpice32: false,
-    nowUseSC: -1
+    nowUseSC: -1,
+    card: ''
 };
 
 export let defaultConf: ILauncherConfig = {

@@ -27,6 +27,7 @@ export interface IGameConfig{
     api: boolean;
     apiPassword: string;
     nowUseSC: number;
+    card: string;
 }
 
 export interface INetworkConfig{

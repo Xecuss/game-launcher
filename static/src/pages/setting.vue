@@ -79,6 +79,14 @@
 
     <p class="block-title">杂项</p>
     <div class="mui-panel">
+        <div class="mui-textfield mui-textfield--float-label">
+            <input type="text" v-model="useConf.name">
+            <label>配置名称</label>
+        </div>
+        <div class="mui-textfield mui-textfield--float-label">
+            <input type="text" v-model="useConf.card">
+            <label>卡号（需要spice版本支持）</label>
+        </div>
         <div class="mui-checkbox">
             <label>
                 <input type="checkbox" v-model="useConf.useSpice32"> 使用32位spice(四代及以下勾选)
@@ -88,10 +96,6 @@
             <label>
                 <input type="checkbox" v-model="useConf.usePrinter"> 模拟印卡机
             </label>
-        </div>
-        <div class="mui-textfield mui-textfield--float-label">
-            <input type="text" v-model="useConf.name">
-            <label>配置名称</label>
         </div>
         <template v-if="useConf.usePrinter">
         <div class="mui-textfield mui-textfield--float-label">

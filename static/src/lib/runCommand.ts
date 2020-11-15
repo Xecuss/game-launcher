@@ -26,6 +26,7 @@ export function useRunCommand(conf: Ref<ILauncherConfig>, selectConf: Ref<number
             res += ' -printer';
             if(useConf.value.printerPath) res += ` -printerath ${useConf.value.printerPath}`;
         }
+        if(useConf.value.card) res += ` -card0 ${useConf.value.card}`;
         let network = conf.value.useAbleNetWorkConf.find( x => x.id === useConf.value.nowUseNetwork);
         if(network !== undefined){
             if(network.url) res += ` -url ${network.url}`;

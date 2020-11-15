@@ -42,6 +42,7 @@ export default {
         //修改配置自动保存
         watch(conf, (obj) => {
             if(obj) {
+                console.log(conf.value);
                 writeConf('./sxLauncher.json', conf.value);
                 //当开启多spice配置管理的时候会尝试创建文件夹
                 if(!oldEnableMSCM && obj.enableMSCM){
