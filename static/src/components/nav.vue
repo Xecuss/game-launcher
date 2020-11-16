@@ -62,8 +62,10 @@ export default defineComponent({
 <style scoped>
 .nav{
     height: 100%;
+    min-width: 100px;
     background-color: rgba(255, 255, 255, 0.4);
     border-right: 1px solid rgba(0, 0, 0, 0.2);
+    flex-shrink: 0;
 }
 .opt-btn{
     color: rgba(0, 0, 0, 0.8);

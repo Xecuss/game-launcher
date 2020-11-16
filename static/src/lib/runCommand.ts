@@ -4,18 +4,12 @@ import { getLocalNetwork } from './getLocalNetwork';
 import { defaultGameConfig } from '../data/defaultConfig';
 
 
-export function useRunCommand(conf: Ref<ILauncherConfig>, selectConf: Ref<number>) {
+export function useRunCommand(conf: Ref<ILauncherConfig>, selectConf?: Ref<number>) {
     let localNetworks = ref(getLocalNetwork());
     let useConf = computed(() => {
-        return conf.value.configs.find( x => x.id === selectConf.value) || conf.value.configs[0] || defaultGameConfig;
+        let trueSelect = selectConf || ref(conf.value.lastUseConfig);
+        return conf.value.configs.find( x => x.id === trueSelect.value) || conf.value.configs[0] || defaultGameConfig;
     });
-    let nowLocalNetwork = ref(localNetworks.value[0]);
-
-    for(let item of localNetworks.value){
-        if(item.name === useConf.value.nowLocalNetwork){
-            nowLocalNetwork = ref(item);
-        }
-    }
 
     let runCommand = computed(() => {
         let res = 'spice64';

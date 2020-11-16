@@ -22,7 +22,7 @@ import { defaultConf, defaultGameConfig } from './data/defaultConfig';
 import { useRunCommand } from './lib/runCommand';
 import { getLocalNetwork } from './lib/getLocalNetwork';
 import { readConfigOrDefault, safeCreateDir, writeConf } from './lib/readConfig';
-import { closeApp, getScreens } from './lib/callSystemAPI';
+import { closeApp, getScreens, openMessageBox } from './lib/callSystemAPI';
 
 export default {
     setup(props: any, ctx: any){
@@ -42,7 +42,6 @@ export default {
         //修改配置自动保存
         watch(conf, (obj) => {
             if(obj) {
-                console.log(conf.value);
                 writeConf('./sxLauncher.json', conf.value);
                 //当开启多spice配置管理的时候会尝试创建文件夹
                 if(!oldEnableMSCM && obj.enableMSCM){
@@ -62,6 +61,9 @@ export default {
 
         function start(id?: number){
             if(id) nowSelect.value = id;
+
+            conf.value.lastUseConfig = nowSelect.value;
+            
             if(servCommand.value){
                 localServProcess = spawn(servCommand.value);
             }
@@ -81,8 +83,22 @@ export default {
         }
 
         function delConfig(id: number){
+            if(conf.value.configs.length <= 1){
+                openMessageBox({
+                    type: 'error',
+                    title: '错误',
+                    defaultId: 1,
+                    message: '请至少保留一个配置项！'
+                });
+                return;
+            }
             let offset = conf.value.configs.findIndex( x => x.id === id);
-            if(offset !== -1) conf.value.configs.splice(offset, 1);
+            if(offset !== -1) {
+                let deleted = conf.value.configs.splice(offset, 1);
+                if(conf.value.lastUseConfig === deleted[0].id) {
+                    conf.value.lastUseConfig = conf.value.configs[0].id;
+                }
+            }
         }
 
         return { 
