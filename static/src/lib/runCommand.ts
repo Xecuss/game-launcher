@@ -6,10 +6,10 @@ import { defaultGameConfig } from '../data/defaultConfig';
 
 export function useRunCommand(conf: Ref<ILauncherConfig>, selectConf: Ref<number>) {
     let localNetworks = ref(getLocalNetwork());
-    let nowLocalNetwork = ref(localNetworks.value[0]);
     let useConf = computed(() => {
         return conf.value.configs.find( x => x.id === selectConf.value) || conf.value.configs[0] || defaultGameConfig;
-    })
+    });
+    let nowLocalNetwork = ref(localNetworks.value[0]);
 
     for(let item of localNetworks.value){
         if(item.name === useConf.value.nowLocalNetwork){
@@ -27,6 +27,7 @@ export function useRunCommand(conf: Ref<ILauncherConfig>, selectConf: Ref<number
             if(useConf.value.printerPath) res += ` -printerath ${useConf.value.printerPath}`;
         }
         if(useConf.value.card) res += ` -card0 ${useConf.value.card}`;
+        //外部网络
         let network = conf.value.useAbleNetWorkConf.find( x => x.id === useConf.value.nowUseNetwork);
         if(network !== undefined){
             if(network.url) res += ` -url ${network.url}`;
@@ -34,11 +35,19 @@ export function useRunCommand(conf: Ref<ILauncherConfig>, selectConf: Ref<number
             res += network.http11 ? ' -http11 1' : ' -http11 0';
             if(network.pcbId) res += ` -p ${network.pcbId}`;
         }
-        if(nowLocalNetwork && nowLocalNetwork.value.v4){
-            let v4 = nowLocalNetwork.value.v4;
+        //好友网络
+        let nowLocalNetwork = localNetworks.value[0];
+        for(let item of localNetworks.value){
+            if(item.name === useConf.value.nowLocalNetwork){
+                nowLocalNetwork = item;
+            }
+        }
+        if(nowLocalNetwork && nowLocalNetwork.v4){
+            let v4 = nowLocalNetwork.v4;
             res += ` -network ${v4.address}`;
             res += ` -subnet ${v4.netmask}`;
         }
+        //多spice配置
         let sc = conf.value.useAbleSC.find( x => x.id === useConf.value.nowUseSC);
         if(sc){
             res += ` -cfgpath ${sc.filename}`;
@@ -60,7 +69,6 @@ export function useRunCommand(conf: Ref<ILauncherConfig>, selectConf: Ref<number
         servCommand,
         runCommand,
         localNetworks,
-        nowLocalNetwork,
         useConf
     }
 }

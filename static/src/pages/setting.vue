@@ -23,11 +23,11 @@
     <div class="mui-panel">
         <div>
         <div class="mui-select my-select">
-            <select v-model="nowLocalNetwork">
+            <select v-model="useConf.nowLocalNetwork">
                 <option 
                 v-for="item in localNetworks" 
                 :key="item.name"
-                :value="item">
+                :value="item.name">
                     {{ item.name }}
                 </option>
             </select>
@@ -133,14 +133,13 @@ export default defineComponent({
         let {
             runCommand,
             localNetworks,
-            nowLocalNetwork,
             useConf
         } = useRunCommand(conf, nowSelect);
         let cardSaveInput: Ref<null | HTMLElement> = ref(null);
 
-        watchEffect(() => {
-            if(conf) useConf.value.nowLocalNetwork = nowLocalNetwork.value.name;
-        });
+        // watchEffect(() => {
+        //     if(conf) useConf.value.nowLocalNetwork = nowLocalNetwork.value.name;
+        // });
 
         onBeforeRouteUpdate((to, from) => {
             nowSelect.value = Number(to.query.id);
@@ -197,7 +196,6 @@ export default defineComponent({
             useConf,
             cardSaveInput,
             localNetworks,
-            nowLocalNetwork,
             runCommand,
             focusHandle,
             deleteHandle,
