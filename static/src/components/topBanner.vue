@@ -1,6 +1,6 @@
 <template>
     <div class="top-bar">
-        <p class="title">Sx Launcher</p>
+        <p class="title">Sx Launcher <span class="version">v0.5.2</span></p>
         <div class="opt-group">
             <span class="btn" @click="callClose"><i class="fa fa-times"/></span>
         </div>
@@ -38,6 +38,12 @@ export default {
 }
 .top-bar .title{
     font-size: 16px;
+}
+.top-bar .title .version{
+    font-size: 12px;
+    color: var(--theme-font-white-second);
+    margin-left: 1px;
+    vertical-align: middle;
 }
 .opt-group .btn{
     display: inline-block;
