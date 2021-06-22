@@ -1,21 +1,21 @@
-import fs from 'fs';
 import { join } from 'path';
 import { IGameConfig, ILauncherConfig } from '../interface/config.interface';
+import { accessFile, makeDir, readFile, writeFile } from './callSystemAPI';
 
-export function readConfigOrDefault(path: string, defaultConf: ILauncherConfig): ILauncherConfig{
+export async function readConfigOrDefault(path: string, defaultConf: ILauncherConfig): Promise<ILauncherConfig>{
     try{
-        let res = fs.readFileSync(path);
+        let res = await readFile(path);
         let rawConf = JSON.parse(res.toString());
         return SafeLoader(rawConf, defaultConf);
     }
     catch(e){
-        fs.writeFileSync(path, JSON.stringify(defaultConf));
+        await writeFile(path, JSON.stringify(defaultConf));
         return defaultConf;
     }
 }
 
-export function writeConf<T>(path: string, conf: T){
-    fs.writeFileSync(path, JSON.stringify(conf));
+export async function writeConf<T>(path: string, conf: T){
+    await writeFile(path, JSON.stringify(conf));
 }
 
 /**
@@ -60,9 +60,9 @@ function SafeLoader(conf: any, defaultConf: ILauncherConfig): ILauncherConfig{
 /**
  * 安全的创建文件夹
  */
-export function safeCreateDir(path: string): void{
+export async function safeCreateDir(path: string): Promise<void>{
     try{
-        fs.mkdirSync(path, {
+        await makeDir(path, {
             recursive: true
         });
     }
@@ -74,17 +74,14 @@ export function safeCreateDir(path: string): void{
 /**
  * 安全的读取spice配置文件
  */
-export function safeReadSC(path: string): string{
-    let created: boolean = true;
-
-    try{ fs.accessSync(path); }
-    catch(e){ created = false; }
+export async function safeReadSC(path: string): Promise<string>{
+    let created: boolean = !!await accessFile(path);
 
     if(!created){
         console.log(`created: ${path}`);
         let folderPath = join(path, '../');
-        safeCreateDir(folderPath);
-        fs.writeFileSync(path, '');
+        await safeCreateDir(folderPath);
+        await writeFile(path, '');
     }
 
     return path;

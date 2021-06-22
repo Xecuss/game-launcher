@@ -18,11 +18,10 @@
     </div>
 </template>
 <script lang="ts">
-import { inject, Ref, computed, ref } from 'vue'
+import { inject, Ref } from 'vue'
 import { useRouter } from 'vue-router';
 import { ILauncherConfig, ISpiceConfig } from '../interface/config.interface';
-import { openFileDialog } from '../lib/callSystemAPI';
-import { safeCreateDir, safeReadSC } from '../lib/readConfig';
+import { safeReadSC } from '../lib/readConfig';
 import { exec } from 'child_process';
 
 const localReg = /https?\:\/\/(localhost|127\.0\.0\.1)/;

@@ -21,6 +21,31 @@ export function getNetworkInterface(): Promise<INetworkResult>{
     return nativeCall('network-interface');
 }
 
+export function readFile(path: string): Promise<string>{
+    return nativeCall('read-file', path);
+}
+
+export function writeFile(path: string, content: string): Promise<void> {
+    return nativeCall('write-file', {
+        path,
+        content
+    });
+}
+
+export function makeDir(path: string, options: any): Promise<void> {
+    return nativeCall('make-dir', {
+        path,
+        options
+    });
+}
+
+export function accessFile(path: string, mode?: any): Promise<string> {
+    return nativeCall('access-file', {
+        path,
+        mode
+    });
+}
+
 export function closeApp(){
     nativeCall('close');
 }

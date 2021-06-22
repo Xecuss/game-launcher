@@ -8,7 +8,7 @@
     </div>
 </template>
 <script lang="ts">
-import { provide, ref, watch } from 'vue';
+import { provide, Ref, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { ChildProcess, exec, spawn } from 'child_process';
 
@@ -20,11 +20,12 @@ import { defaultConf, defaultGameConfig } from './data/defaultConfig';
 import { useRunCommand } from './lib/runCommand';
 import { readConfigOrDefault, safeCreateDir, writeConf } from './lib/readConfig';
 import { closeApp, openMessageBox } from './lib/callSystemAPI';
+import { ILauncherConfig } from './interface/config.interface';
 
 export default {
     setup(props: any, ctx: any){
-        let conf = ref(readConfigOrDefault('./sxLauncher.json', defaultConf));
-        let nowSelect = ref(conf.value.lastUseConfig);
+        let conf: Ref<ILauncherConfig> = ref(defaultConf);
+        let nowSelect = ref(-1);
         let {
             servCommand,
             runCommand,
@@ -36,13 +37,20 @@ export default {
         //由于deep watch无法保存对象的旧值，所以手动保存
         let oldEnableMSCM = conf.value.enableMSCM;
 
+        async function initConfig(){
+            conf.value = await readConfigOrDefault('./sxLauncher.json', defaultConf);
+            oldEnableMSCM = conf.value.enableMSCM;
+        }
+
+        initConfig();
+
         //修改配置自动保存
-        watch(conf, (obj) => {
+        watch(conf, async (obj) => {
             if(obj) {
-                writeConf('./sxLauncher.json', conf.value);
+                await writeConf('./sxLauncher.json', conf.value);
                 //当开启多spice配置管理的时候会尝试创建文件夹
                 if(!oldEnableMSCM && obj.enableMSCM){
-                    safeCreateDir(conf.value.SCPath);
+                    await safeCreateDir(conf.value.SCPath);
                 }
                 oldEnableMSCM = conf.value.enableMSCM;
             }

@@ -115,8 +115,7 @@ import { ref, inject, Ref, defineComponent } from 'vue';
 import { useRouter, onBeforeRouteUpdate } from 'vue-router';
 import { IGameConfig, ILauncherConfig } from '../interface/config.interface';
 import { useRunCommand } from '../lib/runCommand';
-import { openFileDialog, openMessageBox } from '../lib/callSystemAPI';
-import { promises as fs } from 'fs';
+import { openFileDialog, openMessageBox, writeFile } from '../lib/callSystemAPI';
 
 export default defineComponent({
     setup(props, ctx){
@@ -177,7 +176,7 @@ export default defineComponent({
             let fix = new Date().toLocaleString().slice(-2);
             let fileName = `./start-${useConf.value.name}-${fix}.bat`;
 
-            await fs.writeFile(fileName, command);
+            await writeFile(fileName, command);
 
             await openMessageBox({
                 type: 'info',
