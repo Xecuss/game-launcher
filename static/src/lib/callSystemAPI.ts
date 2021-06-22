@@ -1,5 +1,8 @@
 import { OpenDialogOptions, MessageBoxSyncOptions, Display } from 'electron';
-import { nativeCall } from './nativeCall';
+import { nativeCall } from './nativeCall._env_';
+import { NetworkInterfaceInfo } from 'os';
+
+type INetworkResult = NodeJS.Dict<NetworkInterfaceInfo[]>;
 
 
 export function openFileDialog( options: OpenDialogOptions ): Promise<string | null>{
@@ -12,6 +15,10 @@ export function openMessageBox( options: MessageBoxSyncOptions ): Promise<number
 
 export function getScreens(): Promise<Display[]>{
     return nativeCall('get-screen');
+}
+
+export function getNetworkInterface(): Promise<INetworkResult>{
+    return nativeCall('network-interface');
 }
 
 export function closeApp(){

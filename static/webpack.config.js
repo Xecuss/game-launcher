@@ -66,7 +66,19 @@ module.exports = {
         new HtmlPlugin({
             filename: path.resolve(__dirname, '../dist/views/index.html'),
             template: './src/view/index.ejs'
-        })
+        }),
+        new webpack.NormalModuleReplacementPlugin(/_env_/, (context) => {
+            const requestPath = context.request;
+            let targetPath;
+            if(process.env.BUILD_ENV === 'universal'){
+                targetPath = requestPath.replace('._env_', '.wpf');
+            }
+            else {
+                targetPath = requestPath.replace('._env_', '.electron');
+            }
+            console.log(`Env Replacer: ${requestPath} replace to ${targetPath}`);
+            context.request = targetPath;
+        }),
     ],
     target: "electron-renderer"
 };

@@ -1,10 +1,10 @@
-import os from 'os';
 import { ILocalNetwork } from '../interface/localNet.interface';
+import { getNetworkInterface } from './callSystemAPI';
 
-export function getLocalNetwork(){
+export async function getLocalNetwork(){
     let localNetworks: Array<ILocalNetwork> = [];
 
-    let netWorkConf = os.networkInterfaces();
+    let netWorkConf = await getNetworkInterface();
     for(let k in netWorkConf){
         let network = netWorkConf[k];
 

@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "webpack-dev-server --config ./webpack.dev.js ",
-    "build": "webpack"
+    "build": " cross-env BUILD_ENV=normal webpack",
+    "build-universal": "cross-env BUILD_ENV=universal webpack"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@vue/compiler-sfc": "^3.0.0-rc.6",
+    "cross-env": "^7.0.3",
     "css-loader": "^4.2.1",
     "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.3.0",

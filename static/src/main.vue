@@ -15,14 +15,11 @@ import { ChildProcess, exec, spawn } from 'child_process';
 import topBanner from './components/topBanner.vue';
 import Nav from './components/nav.vue';
 
-import { ILocalNetwork } from './interface/localNet.interface';
-import { ILauncherConfig } from './interface/config.interface';
 import { defaultConf, defaultGameConfig } from './data/defaultConfig';
 
 import { useRunCommand } from './lib/runCommand';
-import { getLocalNetwork } from './lib/getLocalNetwork';
 import { readConfigOrDefault, safeCreateDir, writeConf } from './lib/readConfig';
-import { closeApp, getScreens, openMessageBox } from './lib/callSystemAPI';
+import { closeApp, openMessageBox } from './lib/callSystemAPI';
 
 export default {
     setup(props: any, ctx: any){

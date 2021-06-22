@@ -14,7 +14,7 @@
     </div>
 </template>
 <script lang="ts">
-import { defineComponent, Ref, ref, watchEffect } from "vue"
+import { defineComponent, Ref, ref } from "vue"
 import { useRouter } from 'vue-router';
 
 export default defineComponent({

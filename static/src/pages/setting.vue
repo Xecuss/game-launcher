@@ -111,11 +111,8 @@
 </div>
 </template>
 <script lang="ts">
-import { ref, reactive, computed, inject, watchEffect, Ref, defineComponent } from 'vue';
+import { ref, inject, Ref, defineComponent } from 'vue';
 import { useRouter, onBeforeRouteUpdate } from 'vue-router';
-import { ILocalNetwork } from '../interface/localNet.interface';
-import { getLocalNetwork } from '../lib/getLocalNetwork';
-import { exec } from 'child_process';
 import { IGameConfig, ILauncherConfig } from '../interface/config.interface';
 import { useRunCommand } from '../lib/runCommand';
 import { openFileDialog, openMessageBox } from '../lib/callSystemAPI';

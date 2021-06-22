@@ -1,4 +1,5 @@
 import { app, BrowserWindow, ipcMain, dialog } from 'electron';
+import { initNativeHostServer } from './lib/nativeHostServer';
 
 async function main(){
     await app.whenReady();
@@ -25,19 +26,7 @@ async function main(){
         mainWindow.loadFile('./dist/views/index.html');
     }
 
-    ipcMain.on('close', () => {
-        mainWindow.close();
-    });
-
-    ipcMain.on('choose-file', (e, args) => {
-        let files = dialog.showOpenDialogSync(args);
-        e.reply('choose-file-reply', files?.[0]);
-    });
-
-    ipcMain.on('message-box', (e, args) => {
-        let btnOffset = dialog.showMessageBoxSync(args);
-        e.reply('message-box-reply', btnOffset);
-    });
+    initNativeHostServer(mainWindow);
 }
 
 main();

@@ -1,15 +1,23 @@
-import { computed, watchEffect, Ref, ref } from 'vue';
+import { computed, Ref, ref } from 'vue';
 import { ILauncherConfig } from '../interface/config.interface';
 import { getLocalNetwork } from './getLocalNetwork';
 import { defaultGameConfig } from '../data/defaultConfig';
+import { ILocalNetwork } from '../interface/localNet.interface';
 
 
 export function useRunCommand(conf: Ref<ILauncherConfig>, selectConf?: Ref<number>) {
-    let localNetworks = ref(getLocalNetwork());
+    let localNetworks: Ref<ILocalNetwork[]> = ref([]);
     let useConf = computed(() => {
         let trueSelect = selectConf || ref(conf.value.lastUseConfig);
         return conf.value.configs.find( x => x.id === trueSelect.value) || conf.value.configs[0] || defaultGameConfig;
     });
+
+    async function refreshLocalNetwork(){
+        let res = await getLocalNetwork();
+        localNetworks.value = res;
+    }
+
+    refreshLocalNetwork();
 
     let runCommand = computed(() => {
         let res = 'spice64';
@@ -49,7 +57,7 @@ export function useRunCommand(conf: Ref<ILauncherConfig>, selectConf?: Ref<numbe
         return res;
     });
 
-    let servCommand = computed( () => {
+    let servCommand = computed(() => {
         let network = conf.value.useAbleNetWorkConf.find( x => x.id === useConf.value.nowUseNetwork);
 
         if(network?.localServCommand){
@@ -63,6 +71,7 @@ export function useRunCommand(conf: Ref<ILauncherConfig>, selectConf?: Ref<numbe
         servCommand,
         runCommand,
         localNetworks,
-        useConf
+        useConf,
+        refreshLocalNetwork
     }
 }
